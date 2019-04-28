@@ -26,7 +26,7 @@ class GetAccountsSpec {
 
     @Test
     fun `given a response when executes it should completes`() {
-        every { repository.getSources() } returns Observable.just(emptyList())
+        every { repository.getAccounts() } returns Observable.just(emptyList())
 
         val result = getAccounts.buildUseCase().test()
 

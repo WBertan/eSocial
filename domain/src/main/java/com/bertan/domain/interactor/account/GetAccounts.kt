@@ -12,5 +12,5 @@ class GetAccounts(
 ) : ObservableUseCase<List<Account>, Nothing>(executor) {
 
     override fun buildUseCase(params: Nothing?): Observable<List<Account>> =
-        TODO()
+        repository.getAccounts()
 }
