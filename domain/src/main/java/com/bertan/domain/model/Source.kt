@@ -13,7 +13,7 @@ data class Source(
     }
 
     sealed class Colour {
-        data class RGB(val red: Int, val green: Int, val blue: Int)
-        data class Hex(val value: String)
+        data class RGB(val red: Int, val green: Int, val blue: Int) : Colour()
+        data class Hex(val value: String) : Colour()
     }
 }
