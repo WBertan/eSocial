@@ -1,9 +1,6 @@
 package com.bertan.domain.test
 
-import com.bertan.domain.model.Account
-import com.bertan.domain.model.Comment
-import com.bertan.domain.model.Post
-import com.bertan.domain.model.Source
+import com.bertan.domain.model.*
 import java.util.*
 
 abstract class DataFactory<T> {
@@ -27,14 +24,16 @@ object SourceDataFactory : DataFactory<Source>() {
         )
 
     private fun randomState() =
-        if (randomBoolean()) {
-            Source.State.Enabled
-        } else {
+        listOf(
+            Source.State.Enabled,
             Source.State.Disabled
-        }
+        ).random()
 
     private fun randomColour() =
-        Source.Colour.RGB(randomInt(255), randomInt(255), randomInt(255))
+        listOf(
+            Source.Colour.RGB(randomInt(255), randomInt(255), randomInt(255)),
+            Source.Colour.Hex(randomString())
+        ).random()
 }
 
 object AccountDataFactory : DataFactory<Account>() {
@@ -76,4 +75,21 @@ object CommentDataFactory : DataFactory<Comment>() {
             randomString(),
             randomLong()
         )
+}
+
+object BodyDataFactory : DataFactory<Body>() {
+    override fun get(): Body =
+        Body(
+            randomString(),
+            randomString(),
+            randomType(),
+            randomString()
+        )
+
+    private fun randomType() =
+        listOf(
+            Body.Type.Image,
+            Body.Type.Text,
+            Body.Type.Video
+        ).random()
 }
