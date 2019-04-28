@@ -1,6 +1,7 @@
 package com.bertan.domain.test
 
 import com.bertan.domain.model.Account
+import com.bertan.domain.model.Comment
 import com.bertan.domain.model.Post
 import com.bertan.domain.model.Source
 import java.util.*
@@ -53,6 +54,21 @@ object AccountDataFactory : DataFactory<Account>() {
 object PostDataFactory : DataFactory<Post>() {
     override fun get(): Post =
         Post(
+            randomString(),
+            randomString(),
+            randomString(),
+            randomString(),
+            randomString(),
+            randomLong()
+        )
+}
+
+object CommentDataFactory : DataFactory<Comment>() {
+    override fun get(): Comment =
+        Comment(
+            randomString(),
+            randomString(),
+            randomString(),
             randomString(),
             randomString(),
             randomString(),
