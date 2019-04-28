@@ -1,8 +1,8 @@
-package com.bertan.domain.interactor.account
+package com.bertan.domain.interactor.post
 
 import com.bertan.domain.executor.SchedulerExecutor
 import com.bertan.domain.repository.Repository
-import com.bertan.domain.test.AccountDataFactory
+import com.bertan.domain.test.PostDataFactory
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -13,8 +13,8 @@ import org.junit.Test
 import org.junit.rules.ExpectedException
 import java.util.*
 
-class GetAccountSpec {
-    private lateinit var getAccount: GetAccount
+class GetPostSpec {
+    private lateinit var getPost: GetPost
 
     @MockK
     private lateinit var repository: Repository
@@ -27,14 +27,14 @@ class GetAccountSpec {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        getAccount = GetAccount(repository, executor)
+        getPost = GetPost(repository, executor)
     }
 
     @Test
     fun `given a response when executes it should completes`() {
-        every { repository.getAccount(any()) } returns Observable.just(Optional.of(AccountDataFactory.get()))
+        every { repository.getPost(any(), any()) } returns Observable.just(Optional.of(PostDataFactory.get()))
 
-        val result = getAccount.buildUseCase(GetAccount.Param("accountId")).test()
+        val result = getPost.buildUseCase(GetPost.Param("accountId", "postId")).test()
 
         result.assertComplete()
     }
@@ -43,31 +43,31 @@ class GetAccountSpec {
     fun `given a null param when executes it should throw IllegalArgumentException`() {
         exceptionRule.expect(IllegalArgumentException::class.java)
         exceptionRule.expectMessage("Parameter should not be null!")
-        getAccount.buildUseCase(null)
+        getPost.buildUseCase(null)
     }
 
     @Test
     fun `given an empty param when executes it should throw IllegalArgumentException`() {
         exceptionRule.expect(IllegalArgumentException::class.java)
         exceptionRule.expectMessage("Parameter should not be null!")
-        getAccount.buildUseCase()
+        getPost.buildUseCase()
     }
 
     @Test
     fun `given a found response when executes it should return some data`() {
-        val account = AccountDataFactory.get()
-        every { repository.getAccount(any()) } returns Observable.just(Optional.of(account))
+        val post = PostDataFactory.get()
+        every { repository.getPost(any(), any()) } returns Observable.just(Optional.of(post))
 
-        val result = getAccount.buildUseCase(GetAccount.Param(account.id)).test()
+        val result = getPost.buildUseCase(GetPost.Param(post.accountId, post.id)).test()
 
-        result.assertValue(Optional.of(account))
+        result.assertValue(Optional.of(post))
     }
 
     @Test
     fun `given a not found response when executes it should return none data`() {
-        every { repository.getAccount(any()) } returns Observable.just(Optional.empty())
+        every { repository.getPost(any(), any()) } returns Observable.just(Optional.empty())
 
-        val result = getAccount.buildUseCase(GetAccount.Param("notFoundId")).test()
+        val result = getPost.buildUseCase(GetPost.Param("notFoundId", "notFoundId")).test()
 
         result.assertValue(Optional.empty())
     }

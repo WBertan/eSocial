@@ -21,7 +21,7 @@ class GetPostsByAccountSpec {
     private lateinit var executor: SchedulerExecutor
 
     @get:Rule
-    val exceptionRule = ExpectedException.none()
+    val exceptionRule: ExpectedException = ExpectedException.none()
 
     @Before
     fun setup() {
