@@ -22,4 +22,14 @@ ext {
             jUnit: "junit:junit:$junit_version",
             mockK: "io.mockk:mockk:$mockk_version"
     ]
+
+    dataDependencies = [
+            kotlin: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+            rxJava: "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    ]
+
+    dataTestDependencies = [
+            jUnit: "junit:junit:$junit_version",
+            mockK: "io.mockk:mockk:$mockk_version"
+    ]
 }

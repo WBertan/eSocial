@@ -1,0 +1,17 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    compile project(':domain')
+
+    def dataDependencies = rootProject.ext.dataDependencies
+    def dataTestDependencies = rootProject.ext.dataTestDependencies
+
+    implementation dataDependencies.kotlin
+    implementation dataDependencies.rxJava
+
+    testImplementation dataTestDependencies.jUnit
+    testImplementation dataTestDependencies.mockK
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"
