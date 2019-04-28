@@ -1,7 +1,6 @@
 package com.bertan.domain.interactor.account
 
 import com.bertan.domain.executor.SchedulerExecutor
-import com.bertan.domain.model.Account
 import com.bertan.domain.repository.Repository
 import com.bertan.domain.test.AccountDataFactory
 import io.mockk.MockKAnnotations
@@ -12,6 +11,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
+import java.util.*
 
 class GetAccountSpec {
     private lateinit var getAccount: GetAccount
@@ -32,9 +32,9 @@ class GetAccountSpec {
 
     @Test
     fun `given a response when executes it should completes`() {
-        every { repository.getAccount(any()) } returns Observable.just(AccountDataFactory.get())
+        every { repository.getAccount(any()) } returns Observable.just(Optional.of(AccountDataFactory.get()))
 
-        val result = getAccount.buildUseCase().test()
+        val result = getAccount.buildUseCase(GetAccount.Param("accountId")).test()
 
         result.assertComplete()
     }
@@ -54,22 +54,21 @@ class GetAccountSpec {
     }
 
     @Test
-    fun `given a found response when executes it should return data`() {
+    fun `given a found response when executes it should return some data`() {
         val account = AccountDataFactory.get()
-        every { repository.getAccount(any()) } returns Observable.just(account)
+        every { repository.getAccount(any()) } returns Observable.just(Optional.of(account))
 
         val result = getAccount.buildUseCase(GetAccount.Param(account.id)).test()
 
-        result.assertValue(account)
+        result.assertValue(Optional.of(account))
     }
 
     @Test
-    fun `given a not found response when executes it should return data`() {
-        every { repository.getAccount(any()) } returns Observable.just(null)
+    fun `given a not found response when executes it should return none data`() {
+        every { repository.getAccount(any()) } returns Observable.just(Optional.empty())
 
         val result = getAccount.buildUseCase(GetAccount.Param("notFoundId")).test()
 
-        val expectedResult: Account? = null
-        result.assertValue(expectedResult)
+        result.assertValue(Optional.empty())
     }
 }

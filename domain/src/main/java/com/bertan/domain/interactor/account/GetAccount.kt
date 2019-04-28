@@ -5,14 +5,15 @@ import com.bertan.domain.interactor.ObservableUseCase
 import com.bertan.domain.model.Account
 import com.bertan.domain.repository.Repository
 import io.reactivex.Observable
+import java.util.*
 
 class GetAccount(
     private val repository: Repository,
     executor: SchedulerExecutor
-) : ObservableUseCase<Account?, GetAccount.Param>(executor) {
+) : ObservableUseCase<Optional<Account>, GetAccount.Param>(executor) {
 
-    override fun buildUseCase(params: Param?): Observable<Account?> =
-        TODO()
+    override fun buildUseCase(params: Param?): Observable<Optional<Account>> =
+        params.validate { repository.getAccount(it.accountId) }
 
     data class Param(val accountId: String)
 }

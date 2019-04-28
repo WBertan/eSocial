@@ -8,15 +8,20 @@ import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
-abstract class RxUseCase<in Params, Rx> {
+abstract class RxUseCase<Params, Rx> {
     internal val disposables = CompositeDisposable()
 
     abstract fun buildUseCase(params: Params? = null): Rx
 
     fun dispose() = disposables::dispose
+
+    fun Params?.validate(block: (Params) -> Rx): Rx =
+        this
+            ?.let(block)
+            ?: throw IllegalArgumentException("Parameter should not be null!")
 }
 
-abstract class CompletableUseCase<in Params>(private val executor: SchedulerExecutor) :
+abstract class CompletableUseCase<Params>(private val executor: SchedulerExecutor) :
     RxUseCase<Params, Completable>() {
     fun execute(params: Params? = null, onComplete: () -> Unit, onError: (Throwable) -> Unit) =
         buildUseCase(params)
@@ -30,7 +35,7 @@ abstract class CompletableUseCase<in Params>(private val executor: SchedulerExec
             .also { disposables.add(it) }
 }
 
-abstract class ObservableUseCase<T, in Params>(private val executor: SchedulerExecutor) :
+abstract class ObservableUseCase<T, Params>(private val executor: SchedulerExecutor) :
     RxUseCase<Params, Observable<T>>() {
     fun execute(params: Params? = null, onNext: (T) -> Unit, onComplete: () -> Unit, onError: (Throwable) -> Unit) =
         buildUseCase(params)
