@@ -1,5 +1,6 @@
 package com.bertan.domain.test
 
+import com.bertan.domain.model.Account
 import com.bertan.domain.model.Source
 import java.util.*
 
@@ -10,6 +11,7 @@ abstract class DataFactory<T> {
     fun randomString(): String = UUID.randomUUID().toString()
     fun randomBoolean(): Boolean = Math.random() < 0.5
     fun randomInt(bound: Int = Int.MAX_VALUE): Int = Random().nextInt(bound)
+    fun randomLong(): Long = randomInt().toLong()
 }
 
 object SourceDataFactory : DataFactory<Source>() {
@@ -31,4 +33,18 @@ object SourceDataFactory : DataFactory<Source>() {
 
     private fun randomColour() =
         Source.Colour.RGB(randomInt(255), randomInt(255), randomInt(255))
+}
+
+object AccountDataFactory : DataFactory<Account>() {
+    override fun get(): Account =
+        Account(
+            randomString(),
+            randomString(),
+            randomString(),
+            randomString(),
+            randomString(),
+            randomString(),
+            randomLong(),
+            randomLong()
+        )
 }
