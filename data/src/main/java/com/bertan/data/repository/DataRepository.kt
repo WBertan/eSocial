@@ -18,8 +18,8 @@ import io.reactivex.internal.operators.observable.ObservableDefer
 import java.util.*
 
 class DataRepository(
-    val localDataStore: DataStore,
-    val remoteDataStore: DataStore
+    private val localDataStore: DataStore,
+    private val remoteDataStore: DataStore
 ) : Repository {
     override fun getSources(): Observable<List<Source>> =
         localDataStore.getSources()
