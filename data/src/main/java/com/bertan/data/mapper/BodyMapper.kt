@@ -4,19 +4,18 @@ import com.bertan.data.model.BodyEntity
 import com.bertan.domain.model.Body
 
 object BodyEntityMapper {
-    val BodyEntity?.asBody: Body?
-        get() = mapTo {
+    val BodyEntity.asBody: Body
+        get() =
             Body(
-                it.accountId,
-                it.id,
-                requireNotNull(it.type.asType),
-                it.value
+                accountId,
+                id,
+                requireNotNull(type.asType),
+                value
             )
-        }
 
-    private val BodyEntity.TypeEntity?.asType: Body.Type?
-        get() = mapTo {
-            when (it) {
+    private val BodyEntity.TypeEntity.asType: Body.Type
+        get() =
+            when (this) {
                 is BodyEntity.TypeEntity.Image ->
                     Body.Type.Image
                 is BodyEntity.TypeEntity.Text ->
@@ -24,23 +23,21 @@ object BodyEntityMapper {
                 is BodyEntity.TypeEntity.Video ->
                     Body.Type.Video
             }
-        }
 }
 
 object BodyMapper {
-    val Body?.asBodyEntity: BodyEntity?
-        get() = mapTo {
+    val Body.asBodyEntity: BodyEntity
+        get() =
             BodyEntity(
-                it.accountId,
-                it.id,
-                requireNotNull(it.type.asTypeEntity),
-                it.value
+                accountId,
+                id,
+                requireNotNull(type.asTypeEntity),
+                value
             )
-        }
 
-    private val Body.Type?.asTypeEntity: BodyEntity.TypeEntity?
-        get() = mapTo {
-            when (it) {
+    private val Body.Type.asTypeEntity: BodyEntity.TypeEntity
+        get() =
+            when (this) {
                 is Body.Type.Image ->
                     BodyEntity.TypeEntity.Image
                 is Body.Type.Text ->
@@ -48,5 +45,4 @@ object BodyMapper {
                 is Body.Type.Video ->
                     BodyEntity.TypeEntity.Video
             }
-        }
 }

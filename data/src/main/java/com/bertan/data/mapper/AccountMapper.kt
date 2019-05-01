@@ -4,33 +4,31 @@ import com.bertan.data.model.AccountEntity
 import com.bertan.domain.model.Account
 
 object AccountEntityMapper {
-    val AccountEntity?.asAccount: Account?
-        get() = mapTo {
+    val AccountEntity.asAccount: Account
+        get() =
             Account(
-                it.sourceId,
-                it.id,
-                it.name,
-                it.icon,
-                it.userName,
-                it.url,
-                it.createdDate,
-                it.lastSyncDate
+                sourceId,
+                id,
+                name,
+                icon,
+                userName,
+                url,
+                createdDate,
+                lastSyncDate
             )
-        }
 }
 
 object AccountMapper {
-    val Account?.asAccountEntity: AccountEntity?
-        get() = mapTo {
+    val Account.asAccountEntity: AccountEntity
+        get() =
             AccountEntity(
-                it.sourceId,
-                it.id,
-                it.name,
-                it.icon,
-                it.userName,
-                it.url,
-                it.createdDate,
-                it.lastSyncDate
+                sourceId,
+                id,
+                name,
+                icon,
+                userName,
+                url,
+                createdDate,
+                lastSyncDate
             )
-        }
 }

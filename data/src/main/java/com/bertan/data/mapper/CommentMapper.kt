@@ -4,35 +4,33 @@ import com.bertan.data.model.CommentEntity
 import com.bertan.domain.model.Comment
 
 object CommentEntityMapper {
-    val CommentEntity?.asComment: Comment?
-        get() = mapTo {
+    val CommentEntity.asComment: Comment
+        get() =
             Comment(
-                it.accountId,
-                it.postId,
-                it.id,
-                it.bodyId,
-                it.url,
-                it.userName,
-                it.userEmail,
-                it.userIcon,
-                it.createdDate
+                accountId,
+                postId,
+                id,
+                bodyId,
+                url,
+                userName,
+                userEmail,
+                userIcon,
+                createdDate
             )
-        }
 }
 
 object CommentMapper {
-    val Comment?.asCommentEntity: CommentEntity?
-        get() = mapTo {
+    val Comment.asCommentEntity: CommentEntity
+        get() =
             CommentEntity(
-                it.accountId,
-                it.postId,
-                it.id,
-                it.bodyId,
-                it.url,
-                it.userName,
-                it.userEmail,
-                it.userIcon,
-                it.createdDate
+                accountId,
+                postId,
+                id,
+                bodyId,
+                url,
+                userName,
+                userEmail,
+                userIcon,
+                createdDate
             )
-        }
 }
