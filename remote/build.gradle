@@ -1,0 +1,27 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    compile project(':data')
+
+    def remoteKaptDependencies = rootProject.ext.remoteKaptDependencies
+    def remoteDependencies = rootProject.ext.remoteDependencies
+    def remoteTestDependencies = rootProject.ext.remoteTestDependencies
+
+    kapt(remoteKaptDependencies.moshiCodegen)
+
+    implementation remoteDependencies.kotlin
+    implementation remoteDependencies.rxJava
+    implementation remoteDependencies.moshi
+    implementation remoteDependencies.okHttp
+    implementation remoteDependencies.okHttpLogger
+    implementation remoteDependencies.retrofit
+    implementation remoteDependencies.retrofitConverter
+    implementation remoteDependencies.retrofitAdapter
+
+    testImplementation remoteTestDependencies.jUnit
+    testImplementation remoteTestDependencies.mockK
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

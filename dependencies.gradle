@@ -9,6 +9,11 @@ ext {
     rxjava_version = '2.2.8'
     rxandroid_version = '2.1.1'
 
+    //Network
+    moshi_version = '1.8.0'
+    okHttp_version = '3.14.1'
+    retrofit_version = '2.5.0'
+
     //Tests
     junit_version = '4.12'
     mockk_version = '1.9'
@@ -29,6 +34,26 @@ ext {
     ]
 
     dataTestDependencies = [
+            jUnit: "junit:junit:$junit_version",
+            mockK: "io.mockk:mockk:$mockk_version"
+    ]
+
+    remoteKaptDependencies = [
+            moshiCodegen: "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    ]
+
+    remoteDependencies = [
+            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+            rxJava           : "io.reactivex.rxjava2:rxjava:$rxjava_version",
+            moshi            : "com.squareup.moshi:moshi:$moshi_version",
+            okHttp           : "com.squareup.okhttp3:okhttp:$okHttp_version",
+            okHttpLogger     : "com.squareup.okhttp3:logging-interceptor:$okHttp_version",
+            retrofit         : "com.squareup.retrofit2:retrofit:$retrofit_version",
+            retrofitConverter: "com.squareup.retrofit2:converter-moshi:$retrofit_version",
+            retrofitAdapter  : "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    ]
+
+    remoteTestDependencies = [
             jUnit: "junit:junit:$junit_version",
             mockK: "io.mockk:mockk:$mockk_version"
     ]
