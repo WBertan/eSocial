@@ -7,7 +7,6 @@ object BodyEntityMapper {
     val BodyEntity.asBody: Body
         get() =
             Body(
-                id,
                 requireNotNull(type.asType),
                 value
             )
@@ -28,7 +27,6 @@ object BodyMapper {
     val Body.asBodyEntity: BodyEntity
         get() =
             BodyEntity(
-                id,
                 requireNotNull(type.asTypeEntity),
                 value
             )

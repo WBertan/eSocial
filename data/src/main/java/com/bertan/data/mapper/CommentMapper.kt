@@ -1,5 +1,7 @@
 package com.bertan.data.mapper
 
+import com.bertan.data.mapper.BodyEntityMapper.asBody
+import com.bertan.data.mapper.BodyMapper.asBodyEntity
 import com.bertan.data.model.CommentEntity
 import com.bertan.domain.model.Comment
 
@@ -9,7 +11,7 @@ object CommentEntityMapper {
             Comment(
                 postId,
                 id,
-                bodyId,
+                body?.asBody,
                 url,
                 userName,
                 userEmail,
@@ -24,7 +26,7 @@ object CommentMapper {
             CommentEntity(
                 postId,
                 id,
-                bodyId,
+                body?.asBodyEntity,
                 url,
                 userName,
                 userEmail,

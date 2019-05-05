@@ -2,7 +2,6 @@ package com.bertan.data.store
 
 import com.bertan.data.repository.RemoteDataSource
 import com.bertan.data.test.AccountEntityDataFactory
-import com.bertan.data.test.BodyEntityDataFactory
 import com.bertan.data.test.CommentEntityDataFactory
 import com.bertan.data.test.PostEntityDataFactory
 import io.mockk.MockKAnnotations
@@ -117,15 +116,5 @@ class RemoteDataStoreSpec {
     @Test(expected = UnsupportedOperationException::class)
     fun `when addComment it should throw exception`() {
         remoteDataStore.addComment(CommentEntityDataFactory.get())
-    }
-
-    @Test(expected = UnsupportedOperationException::class)
-    fun `when getBody it should throw exception`() {
-        remoteDataStore.getBody("bodyId")
-    }
-
-    @Test(expected = UnsupportedOperationException::class)
-    fun `when addBody it should throw exception`() {
-        remoteDataStore.addBody(BodyEntityDataFactory.get())
     }
 }

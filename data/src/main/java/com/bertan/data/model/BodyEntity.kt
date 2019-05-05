@@ -1,7 +1,6 @@
 package com.bertan.data.model
 
 data class BodyEntity(
-    val id: String,
     val type: TypeEntity,
     val value: String
 ) {

@@ -1,6 +1,9 @@
 package com.bertan.data.repository
 
-import com.bertan.data.model.*
+import com.bertan.data.model.AccountEntity
+import com.bertan.data.model.CommentEntity
+import com.bertan.data.model.PostEntity
+import com.bertan.data.model.SourceEntity
 import io.reactivex.Completable
 import io.reactivex.Observable
 import java.util.*
@@ -19,7 +22,4 @@ interface LocalDataSource {
     fun getCommentsByPost(postId: String): Observable<List<CommentEntity>>
     fun getComment(postId: String, commentId: String): Observable<Optional<CommentEntity>>
     fun addComment(comment: CommentEntity): Completable
-
-    fun getBody(bodyId: String): Observable<Optional<BodyEntity>>
-    fun addBody(body: BodyEntity): Completable
 }

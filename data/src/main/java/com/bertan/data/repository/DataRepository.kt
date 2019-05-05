@@ -2,15 +2,16 @@ package com.bertan.data.repository
 
 import com.bertan.data.mapper.AccountEntityMapper.asAccount
 import com.bertan.data.mapper.AccountMapper.asAccountEntity
-import com.bertan.data.mapper.BodyEntityMapper.asBody
-import com.bertan.data.mapper.BodyMapper.asBodyEntity
 import com.bertan.data.mapper.CommentEntityMapper.asComment
 import com.bertan.data.mapper.CommentMapper.asCommentEntity
 import com.bertan.data.mapper.PostEntityMapper.asPost
 import com.bertan.data.mapper.PostMapper.asPostEntity
 import com.bertan.data.mapper.SourceEntityMapper.asSource
 import com.bertan.data.store.DataStore
-import com.bertan.domain.model.*
+import com.bertan.domain.model.Account
+import com.bertan.domain.model.Comment
+import com.bertan.domain.model.Post
+import com.bertan.domain.model.Source
 import com.bertan.domain.repository.Repository
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -77,12 +78,5 @@ class DataRepository(
 
     override fun addComment(comment: Comment): Completable =
         localDataStore.addComment(comment.asCommentEntity)
-
-    override fun getBody(bodyId: String): Observable<Optional<Body>> =
-        localDataStore.getBody(bodyId)
-            .map { result -> result.map { it.asBody } }
-
-    override fun addBody(body: Body): Completable =
-        localDataStore.addBody(body.asBodyEntity)
 
 }

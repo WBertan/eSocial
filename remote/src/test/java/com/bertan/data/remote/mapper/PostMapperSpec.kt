@@ -12,23 +12,19 @@ class PostMapperSpec {
     fun `given remoteModel when mapping to entity it should map`() {
         val remoteModel = PostModelDataFactory.get()
         val expectedResult =
-            Pair(
-                PostEntity(
-                    remoteModel.id.toString(),
-                    remoteModel.title,
-                    "post_${remoteModel.id}",
-                    "https://jsonplaceholder.typicode.com/posts/${remoteModel.id}",
-                    0
-                ),
+            PostEntity(
+                remoteModel.id.toString(),
+                remoteModel.title,
                 BodyEntity(
-                    "post_${remoteModel.id}",
                     BodyEntity.TypeEntity.Text,
                     remoteModel.body
-                )
+                ),
+                "https://jsonplaceholder.typicode.com/posts/${remoteModel.id}",
+                0
             )
 
         val result = remoteModel.asPostEntity
 
-        assertEquals(expectedResult, result.copy(result.first.copy(createdDate = 0), result.second))
+        assertEquals(expectedResult, result.copy(createdDate = 0))
     }
 }

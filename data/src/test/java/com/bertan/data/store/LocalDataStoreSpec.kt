@@ -1,7 +1,10 @@
 package com.bertan.data.store
 
 import com.bertan.data.repository.LocalDataSource
-import com.bertan.data.test.*
+import com.bertan.data.test.AccountEntityDataFactory
+import com.bertan.data.test.CommentEntityDataFactory
+import com.bertan.data.test.PostEntityDataFactory
+import com.bertan.data.test.SourceEntityDataFactory
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -149,34 +152,6 @@ class LocalDataStoreSpec {
         every { localDataSource.addComment(any()) } returns Completable.complete()
 
         val result = localDataStore.addComment(CommentEntityDataFactory.get()).test()
-
-        result.assertComplete()
-    }
-
-    @Test
-    fun `given a found response when getBody it should completes and return data`() {
-        val body = BodyEntityDataFactory.get()
-        every { localDataSource.getBody(any()) } returns Observable.just(Optional.of(body))
-
-        val result = localDataStore.getBody("bodyId").test()
-
-        result.assertCompletedValue(Optional.of(body))
-    }
-
-    @Test
-    fun `given a not found response when getBody it should completes and return data`() {
-        every { localDataSource.getBody(any()) } returns Observable.just(Optional.empty())
-
-        val result = localDataStore.getBody("notFoundId").test()
-
-        result.assertCompletedValue(Optional.empty())
-    }
-
-    @Test
-    fun `given a response when addBody it should completes`() {
-        every { localDataSource.addBody(any()) } returns Completable.complete()
-
-        val result = localDataStore.addBody(BodyEntityDataFactory.get()).test()
 
         result.assertComplete()
     }

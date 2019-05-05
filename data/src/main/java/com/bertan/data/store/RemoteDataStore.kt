@@ -1,6 +1,9 @@
 package com.bertan.data.store
 
-import com.bertan.data.model.*
+import com.bertan.data.model.AccountEntity
+import com.bertan.data.model.CommentEntity
+import com.bertan.data.model.PostEntity
+import com.bertan.data.model.SourceEntity
 import com.bertan.data.repository.RemoteDataSource
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -37,11 +40,5 @@ class RemoteDataStore(private val remoteDataSource: RemoteDataSource) : DataStor
         remoteDataSource.getComment(postId, commentId)
 
     override fun addComment(comment: CommentEntity): Completable =
-        throw unsupportedOperation
-
-    override fun getBody(bodyId: String): Observable<Optional<BodyEntity>> =
-        throw unsupportedOperation
-
-    override fun addBody(body: BodyEntity): Completable =
         throw unsupportedOperation
 }

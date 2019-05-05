@@ -12,26 +12,22 @@ class CommentMapperSpec {
     fun `given remoteModel when mapping to entity it should map`() {
         val remoteModel = CommentModelDataFactory.get()
         val expectedResult =
-            Pair(
-                CommentEntity(
-                    remoteModel.postId.toString(),
-                    remoteModel.id.toString(),
-                    "comment_${remoteModel.postId}_${remoteModel.id}",
-                    null,
-                    remoteModel.name,
-                    remoteModel.email,
-                    "https://api.adorable.io/avatars/200/${remoteModel.email}",
-                    0
-                ),
+            CommentEntity(
+                remoteModel.postId.toString(),
+                remoteModel.id.toString(),
                 BodyEntity(
-                    "comment_${remoteModel.postId}_${remoteModel.id}",
                     BodyEntity.TypeEntity.Text,
                     remoteModel.body
-                )
+                ),
+                null,
+                remoteModel.name,
+                remoteModel.email,
+                "https://api.adorable.io/avatars/200/${remoteModel.email}",
+                0
             )
 
         val result = remoteModel.asCommentEntity
 
-        assertEquals(expectedResult, result.copy(result.first.copy(createdDate = 0), result.second))
+        assertEquals(expectedResult, result.copy(createdDate = 0))
     }
 }

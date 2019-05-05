@@ -1,5 +1,7 @@
 package com.bertan.data.mapper
 
+import com.bertan.data.mapper.BodyEntityMapper.asBody
+import com.bertan.data.mapper.BodyMapper.asBodyEntity
 import com.bertan.data.mapper.PostEntityMapper.asPost
 import com.bertan.data.mapper.PostMapper.asPostEntity
 import com.bertan.data.model.PostEntity
@@ -17,7 +19,7 @@ class PostMapperSpec {
             PostEntity(
                 domain.id,
                 domain.title,
-                domain.bodyId,
+                domain.body!!.asBodyEntity,
                 domain.url,
                 domain.createdDate
             )
@@ -34,7 +36,7 @@ class PostMapperSpec {
             Post(
                 entity.id,
                 entity.title,
-                entity.bodyId,
+                entity.body!!.asBody,
                 entity.url,
                 entity.createdDate
             )

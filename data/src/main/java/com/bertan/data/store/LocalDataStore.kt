@@ -1,6 +1,9 @@
 package com.bertan.data.store
 
-import com.bertan.data.model.*
+import com.bertan.data.model.AccountEntity
+import com.bertan.data.model.CommentEntity
+import com.bertan.data.model.PostEntity
+import com.bertan.data.model.SourceEntity
 import com.bertan.data.repository.LocalDataSource
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -36,10 +39,4 @@ class LocalDataStore(private val localDataSource: LocalDataSource) : DataStore {
 
     override fun addComment(comment: CommentEntity): Completable =
         localDataSource.addComment(comment)
-
-    override fun getBody(bodyId: String): Observable<Optional<BodyEntity>> =
-        localDataSource.getBody(bodyId)
-
-    override fun addBody(body: BodyEntity): Completable =
-        localDataSource.addBody(body)
 }

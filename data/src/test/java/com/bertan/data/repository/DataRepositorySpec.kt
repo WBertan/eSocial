@@ -1,13 +1,18 @@
 package com.bertan.data.repository
 
 import com.bertan.data.mapper.AccountMapper.asAccountEntity
-import com.bertan.data.mapper.BodyMapper.asBodyEntity
 import com.bertan.data.mapper.CommentMapper.asCommentEntity
 import com.bertan.data.mapper.PostMapper.asPostEntity
 import com.bertan.data.mapper.SourceMapper.asSourceEntity
-import com.bertan.data.model.*
+import com.bertan.data.model.AccountEntity
+import com.bertan.data.model.CommentEntity
+import com.bertan.data.model.PostEntity
+import com.bertan.data.model.SourceEntity
 import com.bertan.data.store.DataStore
-import com.bertan.data.test.*
+import com.bertan.data.test.AccountDataFactory
+import com.bertan.data.test.CommentDataFactory
+import com.bertan.data.test.PostDataFactory
+import com.bertan.data.test.SourceDataFactory
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -28,7 +33,6 @@ class DataRepositorySpec {
         private val accounts: MutableList<AccountEntity> = mutableListOf()
         private val posts: MutableList<PostEntity> = mutableListOf()
         private val comments: MutableList<CommentEntity> = mutableListOf()
-        private val bodies: MutableList<BodyEntity> = mutableListOf()
 
         override fun getSources(): Observable<List<SourceEntity>> =
             Observable.just(sources)
@@ -59,17 +63,11 @@ class DataRepositorySpec {
 
         override fun addComment(comment: CommentEntity): Completable =
             Completable.fromAction { comments.add(comment) }
-
-        override fun getBody(bodyId: String): Observable<Optional<BodyEntity>> =
-            Observable.just(bodies.find { it.id == bodyId }.asOptional)
-
-        override fun addBody(body: BodyEntity): Completable =
-            Completable.fromAction { bodies.add(body) }
     }
 
-    lateinit var dataRepository: DataRepository
+    private lateinit var dataRepository: DataRepository
 
-    lateinit var localDataStore: DataStore
+    private lateinit var localDataStore: DataStore
 
     @MockK
     lateinit var remoteDataStore: DataStore
@@ -373,35 +371,6 @@ class DataRepositorySpec {
         every { localDataStore.addComment(any()) } returns Completable.complete()
 
         val result = dataRepository.addComment(CommentDataFactory.get()).test()
-
-        result.assertComplete()
-    }
-
-    @Test
-    fun `given a found response when getBody it should completes and return data`() {
-        val body = BodyDataFactory.get()
-        val bodyEntity = body.asBodyEntity
-        every { localDataStore.getBody(any()) } returns Observable.just(Optional.of(bodyEntity))
-
-        val result = dataRepository.getBody("bodyId").test()
-
-        result.assertCompletedValue(Optional.of(body))
-    }
-
-    @Test
-    fun `given a not found response when getBody it should completes and return data`() {
-        every { localDataStore.getBody(any()) } returns Observable.just(Optional.empty())
-
-        val result = dataRepository.getBody("notFoundId").test()
-
-        result.assertCompletedValue(Optional.empty())
-    }
-
-    @Test
-    fun `given a response when addBody it should completes`() {
-        every { localDataStore.addBody(any()) } returns Completable.complete()
-
-        val result = dataRepository.addBody(BodyDataFactory.get()).test()
 
         result.assertComplete()
     }

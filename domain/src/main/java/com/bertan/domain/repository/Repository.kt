@@ -1,6 +1,9 @@
 package com.bertan.domain.repository
 
-import com.bertan.domain.model.*
+import com.bertan.domain.model.Account
+import com.bertan.domain.model.Comment
+import com.bertan.domain.model.Post
+import com.bertan.domain.model.Source
 import io.reactivex.Completable
 import io.reactivex.Observable
 import java.util.*
@@ -9,8 +12,7 @@ interface Repository :
     SourcesRepository,
     AccountsRepository,
     PostsRepository,
-    CommentsRepository,
-    BodiesRepository
+    CommentsRepository
 
 interface SourcesRepository {
     fun getSources(): Observable<List<Source>>
@@ -32,9 +34,4 @@ interface CommentsRepository {
     fun getCommentsByPost(postId: String): Observable<List<Comment>>
     fun getComment(postId: String, commentId: String): Observable<Optional<Comment>>
     fun addComment(comment: Comment): Completable
-}
-
-interface BodiesRepository {
-    fun getBody(bodyId: String): Observable<Optional<Body>>
-    fun addBody(body: Body): Completable
 }

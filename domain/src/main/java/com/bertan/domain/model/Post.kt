@@ -3,7 +3,7 @@ package com.bertan.domain.model
 data class Post(
     val id: String,
     val title: String?,
-    val bodyId: String?,
+    val body: Body?,
     val url: String?,
     val createdDate: Long
 )

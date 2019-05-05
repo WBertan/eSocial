@@ -6,23 +6,19 @@ import com.bertan.data.remote.model.CommentModel
 import com.bertan.data.remote.randomDate
 
 object CommentMapper {
-    val CommentModel.asCommentEntity: Pair<CommentEntity, BodyEntity>
+    val CommentModel.asCommentEntity: CommentEntity
         get() =
-            Pair(
-                CommentEntity(
-                    postId.toString(),
-                    id.toString(),
-                    "comment_${postId}_$id",
-                    null,
-                    name,
-                    email,
-                    "https://api.adorable.io/avatars/200/$email",
-                    randomDate()
-                ),
+            CommentEntity(
+                postId.toString(),
+                id.toString(),
                 BodyEntity(
-                    "comment_${postId}_$id",
                     BodyEntity.TypeEntity.Text,
                     body
-                )
+                ),
+                null,
+                name,
+                email,
+                "https://api.adorable.io/avatars/200/$email",
+                randomDate()
             )
 }

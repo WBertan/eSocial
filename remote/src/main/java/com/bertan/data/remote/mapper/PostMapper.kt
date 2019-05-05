@@ -6,20 +6,16 @@ import com.bertan.data.remote.model.PostModel
 import com.bertan.data.remote.randomDate
 
 object PostMapper {
-    val PostModel.asPostEntity: Pair<PostEntity, BodyEntity>
+    val PostModel.asPostEntity: PostEntity
         get() =
-            Pair(
-                PostEntity(
-                    id.toString(),
-                    title,
-                    "post_$id",
-                    "https://jsonplaceholder.typicode.com/posts/$id",
-                    randomDate()
-                ),
+            PostEntity(
+                id.toString(),
+                title,
                 BodyEntity(
-                    "post_$id",
                     BodyEntity.TypeEntity.Text,
                     body
-                )
+                ),
+                "https://jsonplaceholder.typicode.com/posts/$id",
+                randomDate()
             )
 }
