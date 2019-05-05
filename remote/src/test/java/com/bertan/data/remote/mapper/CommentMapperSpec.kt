@@ -23,11 +23,11 @@ class CommentMapperSpec {
                 remoteModel.name,
                 remoteModel.email,
                 "https://api.adorable.io/avatars/200/${remoteModel.email}",
-                0
+                remoteModel.createdDate
             )
 
         val result = remoteModel.asCommentEntity
 
-        assertEquals(expectedResult, result.copy(createdDate = 0))
+        assertEquals(expectedResult, result)
     }
 }

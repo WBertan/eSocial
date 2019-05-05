@@ -20,7 +20,8 @@ object PostModelDataFactory : RemoteModelDataFactory<PostModel>() {
             randomLong(),
             randomLong(),
             randomString(),
-            randomString()
+            randomString(),
+            randomLong()
         )
 }
 
@@ -31,6 +32,7 @@ object CommentModelDataFactory : RemoteModelDataFactory<CommentModel>() {
             randomLong(),
             randomString(),
             randomString(),
-            randomString()
+            randomString(),
+            randomLong()
         )
 }

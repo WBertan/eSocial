@@ -3,7 +3,6 @@ package com.bertan.data.remote.mapper
 import com.bertan.data.model.BodyEntity
 import com.bertan.data.model.CommentEntity
 import com.bertan.data.remote.model.CommentModel
-import com.bertan.data.remote.randomDate
 
 object CommentMapper {
     val CommentModel.asCommentEntity: CommentEntity
@@ -19,6 +18,6 @@ object CommentMapper {
                 name,
                 email,
                 "https://api.adorable.io/avatars/200/$email",
-                randomDate()
+                createdDate
             )
 }

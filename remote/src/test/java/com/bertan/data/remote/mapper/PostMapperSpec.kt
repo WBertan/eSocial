@@ -20,11 +20,11 @@ class PostMapperSpec {
                     remoteModel.body
                 ),
                 "https://jsonplaceholder.typicode.com/posts/${remoteModel.id}",
-                0
+                remoteModel.createdDate
             )
 
         val result = remoteModel.asPostEntity
 
-        assertEquals(expectedResult, result.copy(createdDate = 0))
+        assertEquals(expectedResult, result)
     }
 }
