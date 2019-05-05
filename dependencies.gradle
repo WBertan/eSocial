@@ -1,4 +1,13 @@
 ext {
+    //Android
+    compileSdkVersion = 28
+    minSdkVersion = 21
+    targetSdkVersion = 28
+
+    androidx = [
+            appcompat: '1.0.2'
+    ]
+
     //Gradle
     gradleBuildTools = '3.4.0'
 
@@ -54,6 +63,19 @@ ext {
     ]
 
     remoteTestDependencies = [
+            jUnit: "junit:junit:$junit_version",
+            mockK: "io.mockk:mockk:$mockk_version"
+    ]
+
+    localDependencies = [
+            appCompat: "androidx.appcompat:appcompat:${androidx.appcompat}",
+            kotlin   : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+            rxJava   : "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    ]
+
+    localTestInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+    localTestDependencies = [
             jUnit: "junit:junit:$junit_version",
             mockK: "io.mockk:mockk:$mockk_version"
     ]
