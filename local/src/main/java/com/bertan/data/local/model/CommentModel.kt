@@ -1,14 +1,14 @@
 package com.bertan.data.local.model
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.bertan.data.local.db.Constants.Comments
 
-@Entity(tableName = Comments.TABLE_NAME)
+@Entity(tableName = Comments.TABLE_NAME, primaryKeys = ["postId", "id"])
 data class CommentModel(
-    @PrimaryKey val postId: String,
-    @PrimaryKey val id: String,
-    val body: BodyModel?,
+    val postId: String,
+    val id: String,
+    val bodyType: String?,
+    val bodyValue: String?,
     val url: String?,
     val userName: String?,
     val userEmail: String?,

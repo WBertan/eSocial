@@ -4,16 +4,16 @@ data class SourceModel(
     val id: String,
     val name: String,
     val icon: String?,
-    val state: StateEntity,
-    val colour: ColourEntity
+    val state: StateModel,
+    val colour: ColourModel
 ) {
-    sealed class StateEntity {
-        object Enabled : StateEntity()
-        object Disabled : StateEntity()
+    sealed class StateModel {
+        object Enabled : StateModel()
+        object Disabled : StateModel()
     }
 
-    sealed class ColourEntity {
-        data class RGB(val red: Int, val green: Int, val blue: Int) : ColourEntity()
-        data class Hex(val value: String) : ColourEntity()
+    sealed class ColourModel {
+        data class RGB(val red: Int, val green: Int, val blue: Int) : ColourModel()
+        data class Hex(val value: String) : ColourModel()
     }
 }

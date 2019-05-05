@@ -8,7 +8,8 @@ import com.bertan.data.local.db.Constants.Posts
 data class PostModel(
     @PrimaryKey val id: String,
     val title: String?,
-    val body: BodyModel?,
+    val bodyType: String?,
+    val bodyValue: String?,
     val url: String?,
     val createdDate: Long
 )
