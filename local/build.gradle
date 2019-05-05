@@ -21,15 +21,21 @@ android {
 dependencies {
     implementation project(':data')
 
+    def localKaptDependencies = rootProject.ext.localKaptDependencies
     def localDependencies = rootProject.ext.localDependencies
     def localTestDependencies = rootProject.ext.localTestDependencies
 
+    kapt(localKaptDependencies.roomCompiler)
+
     implementation localDependencies.appCompat
     implementation localDependencies.kotlin
-    implementation localDependencies.rxJava
+    implementation localDependencies.roomRuntime
+    implementation localDependencies.roomRxJava
 
     testImplementation localTestDependencies.jUnit
     testImplementation localTestDependencies.mockK
+    testImplementation localTestDependencies.roomTesting
+    testImplementation localTestDependencies.robolectric
 }
 
 sourceCompatibility = "8"
