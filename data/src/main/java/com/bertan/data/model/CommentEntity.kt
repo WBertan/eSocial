@@ -1,7 +1,6 @@
 package com.bertan.data.model
 
 data class CommentEntity(
-    val accountId: String,
     val postId: String,
     val id: String,
     val bodyId: String?,

@@ -13,7 +13,7 @@ class GetBody(
 ) : ObservableUseCase<Optional<Body>, GetBody.Param>(executor) {
 
     override fun buildUseCase(params: Param?): Observable<Optional<Body>> =
-        params.validate { repository.getBody(it.accountId, it.bodyId) }
+        params.validate { repository.getBody(it.bodyId) }
 
-    data class Param(val accountId: String, val bodyId: String)
+    data class Param(val bodyId: String)
 }

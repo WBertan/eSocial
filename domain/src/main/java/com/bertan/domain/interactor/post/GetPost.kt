@@ -13,7 +13,7 @@ class GetPost(
 ) : ObservableUseCase<Optional<Post>, GetPost.Param>(executor) {
 
     override fun buildUseCase(params: Param?): Observable<Optional<Post>> =
-        params.validate { repository.getPost(it.accountId, it.postId) }
+        params.validate { repository.getPost(it.postId) }
 
-    data class Param(val accountId: String, val postId: String)
+    data class Param(val postId: String)
 }

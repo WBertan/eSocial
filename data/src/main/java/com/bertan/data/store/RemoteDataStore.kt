@@ -24,25 +24,22 @@ class RemoteDataStore(private val remoteDataSource: RemoteDataSource) : DataStor
     override fun getPosts(): Observable<List<PostEntity>> =
         remoteDataSource.getPosts()
 
-    override fun getPostsByAccount(accountId: String): Observable<List<PostEntity>> =
-        remoteDataSource.getPostsByAccount(accountId)
-
-    override fun getPost(accountId: String, postId: String): Observable<Optional<PostEntity>> =
-        remoteDataSource.getPost(accountId, postId)
+    override fun getPost(postId: String): Observable<Optional<PostEntity>> =
+        remoteDataSource.getPost(postId)
 
     override fun addPost(post: PostEntity): Completable =
         throw unsupportedOperation
 
-    override fun getCommentsByPost(accountId: String, postId: String): Observable<List<CommentEntity>> =
-        remoteDataSource.getCommentsByPost(accountId, postId)
+    override fun getCommentsByPost(postId: String): Observable<List<CommentEntity>> =
+        remoteDataSource.getCommentsByPost(postId)
 
-    override fun getComment(accountId: String, postId: String, commentId: String): Observable<Optional<CommentEntity>> =
-        remoteDataSource.getComment(accountId, postId, commentId)
+    override fun getComment(postId: String, commentId: String): Observable<Optional<CommentEntity>> =
+        remoteDataSource.getComment(postId, commentId)
 
     override fun addComment(comment: CommentEntity): Completable =
         throw unsupportedOperation
 
-    override fun getBody(accountId: String, bodyId: String): Observable<Optional<BodyEntity>> =
+    override fun getBody(bodyId: String): Observable<Optional<BodyEntity>> =
         throw unsupportedOperation
 
     override fun addBody(body: BodyEntity): Completable =

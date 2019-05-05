@@ -22,26 +22,23 @@ class LocalDataStore(private val localDataSource: LocalDataSource) : DataStore {
     override fun getPosts(): Observable<List<PostEntity>> =
         localDataSource.getPosts()
 
-    override fun getPostsByAccount(accountId: String): Observable<List<PostEntity>> =
-        localDataSource.getPostsByAccount(accountId)
-
-    override fun getPost(accountId: String, postId: String): Observable<Optional<PostEntity>> =
-        localDataSource.getPost(accountId, postId)
+    override fun getPost(postId: String): Observable<Optional<PostEntity>> =
+        localDataSource.getPost(postId)
 
     override fun addPost(post: PostEntity): Completable =
         localDataSource.addPost(post)
 
-    override fun getCommentsByPost(accountId: String, postId: String): Observable<List<CommentEntity>> =
-        localDataSource.getCommentsByPost(accountId, postId)
+    override fun getCommentsByPost(postId: String): Observable<List<CommentEntity>> =
+        localDataSource.getCommentsByPost(postId)
 
-    override fun getComment(accountId: String, postId: String, commentId: String): Observable<Optional<CommentEntity>> =
-        localDataSource.getComment(accountId, postId, commentId)
+    override fun getComment(postId: String, commentId: String): Observable<Optional<CommentEntity>> =
+        localDataSource.getComment(postId, commentId)
 
     override fun addComment(comment: CommentEntity): Completable =
         localDataSource.addComment(comment)
 
-    override fun getBody(accountId: String, bodyId: String): Observable<Optional<BodyEntity>> =
-        localDataSource.getBody(accountId, bodyId)
+    override fun getBody(bodyId: String): Observable<Optional<BodyEntity>> =
+        localDataSource.getBody(bodyId)
 
     override fun addBody(body: BodyEntity): Completable =
         localDataSource.addBody(body)

@@ -32,9 +32,9 @@ class GetCommentSpec {
 
     @Test
     fun `given a response when executes it should completes`() {
-        every { repository.getComment(any(), any(), any()) } returns Observable.just(Optional.of(CommentDataFactory.get()))
+        every { repository.getComment(any(), any()) } returns Observable.just(Optional.of(CommentDataFactory.get()))
 
-        val result = getComment.buildUseCase(GetComment.Param("accountId", "postId", "commentId")).test()
+        val result = getComment.buildUseCase(GetComment.Param("postId", "commentId")).test()
 
         result.assertComplete()
     }
@@ -56,18 +56,18 @@ class GetCommentSpec {
     @Test
     fun `given a found response when executes it should return some data`() {
         val comment = CommentDataFactory.get()
-        every { repository.getComment(any(), any(), any()) } returns Observable.just(Optional.of(comment))
+        every { repository.getComment(any(), any()) } returns Observable.just(Optional.of(comment))
 
-        val result = getComment.buildUseCase(GetComment.Param(comment.accountId, comment.postId, comment.id)).test()
+        val result = getComment.buildUseCase(GetComment.Param(comment.postId, comment.id)).test()
 
         result.assertValue(Optional.of(comment))
     }
 
     @Test
     fun `given a not found response when executes it should return none data`() {
-        every { repository.getComment(any(), any(), any()) } returns Observable.just(Optional.empty())
+        every { repository.getComment(any(), any()) } returns Observable.just(Optional.empty())
 
-        val result = getComment.buildUseCase(GetComment.Param("notFoundId", "notFoundId", "notFoundId")).test()
+        val result = getComment.buildUseCase(GetComment.Param("notFoundId", "notFoundId")).test()
 
         result.assertValue(Optional.empty())
     }

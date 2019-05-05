@@ -17,7 +17,6 @@ class BodyMapperSpec {
         )
         val expectedResult =
             BodyEntity(
-                domain.accountId,
                 domain.id,
                 BodyEntity.TypeEntity.Text,
                 domain.value
@@ -35,7 +34,6 @@ class BodyMapperSpec {
         )
         val expectedResult =
             Body(
-                entity.accountId,
                 entity.id,
                 Body.Type.Text,
                 entity.value

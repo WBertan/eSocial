@@ -13,7 +13,7 @@ class GetComment(
 ) : ObservableUseCase<Optional<Comment>, GetComment.Param>(executor) {
 
     override fun buildUseCase(params: Param?): Observable<Optional<Comment>> =
-        params.validate { repository.getComment(it.accountId, it.postId, it.commentId) }
+        params.validate { repository.getComment(it.postId, it.commentId) }
 
-    data class Param(val accountId: String, val postId: String, val commentId: String)
+    data class Param(val postId: String, val commentId: String)
 }

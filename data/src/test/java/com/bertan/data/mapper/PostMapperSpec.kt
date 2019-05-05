@@ -15,7 +15,6 @@ class PostMapperSpec {
         val domain = PostDataFactory.get()
         val expectedResult =
             PostEntity(
-                domain.accountId,
                 domain.id,
                 domain.title,
                 domain.bodyId,
@@ -33,7 +32,6 @@ class PostMapperSpec {
         val entity = PostEntityDataFactory.get()
         val expectedResult =
             Post(
-                entity.accountId,
                 entity.id,
                 entity.title,
                 entity.bodyId,

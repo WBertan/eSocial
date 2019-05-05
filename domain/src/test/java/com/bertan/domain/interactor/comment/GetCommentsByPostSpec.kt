@@ -31,9 +31,9 @@ class GetCommentsByPostSpec {
 
     @Test
     fun `given a response when executes it should completes`() {
-        every { repository.getCommentsByPost(any(), any()) } returns Observable.just(emptyList())
+        every { repository.getCommentsByPost(any()) } returns Observable.just(emptyList())
 
-        val result = getCommentsByPost.buildUseCase(GetCommentsByPost.Param("accountId", "postId")).test()
+        val result = getCommentsByPost.buildUseCase(GetCommentsByPost.Param("postId")).test()
 
         result.assertComplete()
     }
@@ -55,9 +55,9 @@ class GetCommentsByPostSpec {
     @Test
     fun `given a response when executes it should return data`() {
         val comments = CommentDataFactory.get(2)
-        every { repository.getCommentsByPost(any(), any()) } returns Observable.just(comments)
+        every { repository.getCommentsByPost(any()) } returns Observable.just(comments)
 
-        val result = getCommentsByPost.buildUseCase(GetCommentsByPost.Param("accountId", "postId")).test()
+        val result = getCommentsByPost.buildUseCase(GetCommentsByPost.Param("postId")).test()
 
         result.assertValue(comments)
     }

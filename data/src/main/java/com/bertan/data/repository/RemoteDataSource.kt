@@ -7,9 +7,8 @@ import java.util.*
 
 interface RemoteDataSource {
     fun getPosts(): Observable<List<PostEntity>>
-    fun getPostsByAccount(accountId: String): Observable<List<PostEntity>>
-    fun getPost(accountId: String, postId: String): Observable<Optional<PostEntity>>
+    fun getPost(postId: String): Observable<Optional<PostEntity>>
 
-    fun getCommentsByPost(accountId: String, postId: String): Observable<List<CommentEntity>>
-    fun getComment(accountId: String, postId: String, commentId: String): Observable<Optional<CommentEntity>>
+    fun getCommentsByPost(postId: String): Observable<List<CommentEntity>>
+    fun getComment(postId: String, commentId: String): Observable<Optional<CommentEntity>>
 }

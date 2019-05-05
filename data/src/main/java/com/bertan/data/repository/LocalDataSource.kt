@@ -13,14 +13,13 @@ interface LocalDataSource {
     fun addAccount(account: AccountEntity): Completable
 
     fun getPosts(): Observable<List<PostEntity>>
-    fun getPostsByAccount(accountId: String): Observable<List<PostEntity>>
-    fun getPost(accountId: String, postId: String): Observable<Optional<PostEntity>>
+    fun getPost(postId: String): Observable<Optional<PostEntity>>
     fun addPost(post: PostEntity): Completable
 
-    fun getCommentsByPost(accountId: String, postId: String): Observable<List<CommentEntity>>
-    fun getComment(accountId: String, postId: String, commentId: String): Observable<Optional<CommentEntity>>
+    fun getCommentsByPost(postId: String): Observable<List<CommentEntity>>
+    fun getComment(postId: String, commentId: String): Observable<Optional<CommentEntity>>
     fun addComment(comment: CommentEntity): Completable
 
-    fun getBody(accountId: String, bodyId: String): Observable<Optional<BodyEntity>>
+    fun getBody(bodyId: String): Observable<Optional<BodyEntity>>
     fun addBody(body: BodyEntity): Completable
 }

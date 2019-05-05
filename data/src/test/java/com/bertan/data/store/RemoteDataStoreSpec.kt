@@ -62,30 +62,20 @@ class RemoteDataStoreSpec {
     }
 
     @Test
-    fun `given a response when getPostsByAccount it should completes and return data`() {
-        val posts = PostEntityDataFactory.get(2)
-        every { remoteDataSource.getPostsByAccount(any()) } returns Observable.just(posts)
-
-        val result = remoteDataStore.getPostsByAccount("accountId").test()
-
-        result.assertCompletedValue(posts)
-    }
-
-    @Test
     fun `given a found response when getPost it should completes and return data`() {
         val post = PostEntityDataFactory.get()
-        every { remoteDataSource.getPost(any(), any()) } returns Observable.just(Optional.of(post))
+        every { remoteDataSource.getPost(any()) } returns Observable.just(Optional.of(post))
 
-        val result = remoteDataStore.getPost("accountId", "postId").test()
+        val result = remoteDataStore.getPost("postId").test()
 
         result.assertCompletedValue(Optional.of(post))
     }
 
     @Test
     fun `given a not found response when getPost it should completes and return data`() {
-        every { remoteDataSource.getPost(any(), any()) } returns Observable.just(Optional.empty())
+        every { remoteDataSource.getPost(any()) } returns Observable.just(Optional.empty())
 
-        val result = remoteDataStore.getPost("notFoundId", "notFoundId").test()
+        val result = remoteDataStore.getPost("notFoundId").test()
 
         result.assertCompletedValue(Optional.empty())
     }
@@ -98,9 +88,9 @@ class RemoteDataStoreSpec {
     @Test
     fun `given a response when getCommentsByPost it should completes and return data`() {
         val comments = CommentEntityDataFactory.get(2)
-        every { remoteDataSource.getCommentsByPost(any(), any()) } returns Observable.just(comments)
+        every { remoteDataSource.getCommentsByPost(any()) } returns Observable.just(comments)
 
-        val result = remoteDataStore.getCommentsByPost("accountId", "postId").test()
+        val result = remoteDataStore.getCommentsByPost("postId").test()
 
         result.assertCompletedValue(comments)
     }
@@ -108,18 +98,18 @@ class RemoteDataStoreSpec {
     @Test
     fun `given a found response when getComment it should completes and return data`() {
         val comment = CommentEntityDataFactory.get()
-        every { remoteDataSource.getComment(any(), any(), any()) } returns Observable.just(Optional.of(comment))
+        every { remoteDataSource.getComment(any(), any()) } returns Observable.just(Optional.of(comment))
 
-        val result = remoteDataStore.getComment("accountId", "postId", "commentId").test()
+        val result = remoteDataStore.getComment("postId", "commentId").test()
 
         result.assertCompletedValue(Optional.of(comment))
     }
 
     @Test
     fun `given a not found response when getComment it should completes and return data`() {
-        every { remoteDataSource.getComment(any(), any(), any()) } returns Observable.just(Optional.empty())
+        every { remoteDataSource.getComment(any(), any()) } returns Observable.just(Optional.empty())
 
-        val result = remoteDataStore.getComment("notFoundId", "notFoundId", "notFoundId").test()
+        val result = remoteDataStore.getComment("notFoundId", "notFoundId").test()
 
         result.assertCompletedValue(Optional.empty())
     }
@@ -131,7 +121,7 @@ class RemoteDataStoreSpec {
 
     @Test(expected = UnsupportedOperationException::class)
     fun `when getBody it should throw exception`() {
-        remoteDataStore.getBody("accountId", "bodyId")
+        remoteDataStore.getBody("bodyId")
     }
 
     @Test(expected = UnsupportedOperationException::class)

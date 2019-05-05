@@ -88,30 +88,20 @@ class LocalDataStoreSpec {
     }
 
     @Test
-    fun `given a response when getPostsByAccount it should completes and return data`() {
-        val posts = PostEntityDataFactory.get(2)
-        every { localDataSource.getPostsByAccount(any()) } returns Observable.just(posts)
-
-        val result = localDataStore.getPostsByAccount("accountId").test()
-
-        result.assertCompletedValue(posts)
-    }
-
-    @Test
     fun `given a found response when getPost it should completes and return data`() {
         val post = PostEntityDataFactory.get()
-        every { localDataSource.getPost(any(), any()) } returns Observable.just(Optional.of(post))
+        every { localDataSource.getPost(any()) } returns Observable.just(Optional.of(post))
 
-        val result = localDataStore.getPost("accountId", "postId").test()
+        val result = localDataStore.getPost("postId").test()
 
         result.assertCompletedValue(Optional.of(post))
     }
 
     @Test
     fun `given a not found response when getPost it should completes and return data`() {
-        every { localDataSource.getPost(any(), any()) } returns Observable.just(Optional.empty())
+        every { localDataSource.getPost(any()) } returns Observable.just(Optional.empty())
 
-        val result = localDataStore.getPost("notFoundId", "notFoundId").test()
+        val result = localDataStore.getPost("notFoundId").test()
 
         result.assertCompletedValue(Optional.empty())
     }
@@ -128,9 +118,9 @@ class LocalDataStoreSpec {
     @Test
     fun `given a response when getCommentsByPost it should completes and return data`() {
         val comments = CommentEntityDataFactory.get(2)
-        every { localDataSource.getCommentsByPost(any(), any()) } returns Observable.just(comments)
+        every { localDataSource.getCommentsByPost(any()) } returns Observable.just(comments)
 
-        val result = localDataStore.getCommentsByPost("accountId", "postId").test()
+        val result = localDataStore.getCommentsByPost("postId").test()
 
         result.assertCompletedValue(comments)
     }
@@ -138,18 +128,18 @@ class LocalDataStoreSpec {
     @Test
     fun `given a found response when getComment it should completes and return data`() {
         val comment = CommentEntityDataFactory.get()
-        every { localDataSource.getComment(any(), any(), any()) } returns Observable.just(Optional.of(comment))
+        every { localDataSource.getComment(any(), any()) } returns Observable.just(Optional.of(comment))
 
-        val result = localDataStore.getComment("accountId", "postId", "commentId").test()
+        val result = localDataStore.getComment("postId", "commentId").test()
 
         result.assertCompletedValue(Optional.of(comment))
     }
 
     @Test
     fun `given a not found response when getComment it should completes and return data`() {
-        every { localDataSource.getComment(any(), any(), any()) } returns Observable.just(Optional.empty())
+        every { localDataSource.getComment(any(), any()) } returns Observable.just(Optional.empty())
 
-        val result = localDataStore.getComment("notFoundId", "notFoundId", "notFoundId").test()
+        val result = localDataStore.getComment("notFoundId", "notFoundId").test()
 
         result.assertCompletedValue(Optional.empty())
     }
@@ -166,18 +156,18 @@ class LocalDataStoreSpec {
     @Test
     fun `given a found response when getBody it should completes and return data`() {
         val body = BodyEntityDataFactory.get()
-        every { localDataSource.getBody(any(), any()) } returns Observable.just(Optional.of(body))
+        every { localDataSource.getBody(any()) } returns Observable.just(Optional.of(body))
 
-        val result = localDataStore.getBody("accountId", "bodyId").test()
+        val result = localDataStore.getBody("bodyId").test()
 
         result.assertCompletedValue(Optional.of(body))
     }
 
     @Test
     fun `given a not found response when getBody it should completes and return data`() {
-        every { localDataSource.getBody(any(), any()) } returns Observable.just(Optional.empty())
+        every { localDataSource.getBody(any()) } returns Observable.just(Optional.empty())
 
-        val result = localDataStore.getBody("notFoundId", "notFoundId").test()
+        val result = localDataStore.getBody("notFoundId").test()
 
         result.assertCompletedValue(Optional.empty())
     }

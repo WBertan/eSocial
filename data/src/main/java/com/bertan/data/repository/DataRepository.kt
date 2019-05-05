@@ -45,50 +45,41 @@ class DataRepository(
             .andThen(ObservableDefer.defer { localDataStore.getPosts() })
             .map { result -> result.map { it.asPost } }
 
-    override fun getPostsByAccount(accountId: String): Observable<List<Post>> =
-        remoteDataStore.getPostsByAccount(accountId)
-            .flatMapCompletable { posts ->
-                Completable.merge(posts.map { localDataStore.addPost(it) })
-            }
-            .onErrorComplete()
-            .andThen(ObservableDefer.defer { localDataStore.getPostsByAccount(accountId) })
-            .map { result -> result.map { it.asPost } }
-
-    override fun getPost(accountId: String, postId: String): Observable<Optional<Post>> =
-        remoteDataStore.getPost(accountId, postId)
+    override fun getPost(postId: String): Observable<Optional<Post>> =
+        remoteDataStore.getPost(postId)
             .flatMapCompletable { post ->
                 post.map { localDataStore.addPost(it) }.orElse(Completable.complete())
             }
             .onErrorComplete()
-            .andThen(ObservableDefer.defer { localDataStore.getPost(accountId, postId) })
+            .andThen(ObservableDefer.defer { localDataStore.getPost(postId) })
             .map { result -> result.map { it.asPost } }
 
     override fun addPost(post: Post): Completable =
         localDataStore.addPost(post.asPostEntity)
 
-    override fun getCommentsByPost(accountId: String, postId: String): Observable<List<Comment>> =
-        remoteDataStore.getCommentsByPost(accountId, postId)
+    override fun getCommentsByPost(postId: String): Observable<List<Comment>> =
+        remoteDataStore.getCommentsByPost(postId)
             .flatMapCompletable { comments ->
                 Completable.merge(comments.map { localDataStore.addComment(it) })
             }
             .onErrorComplete()
-            .andThen(ObservableDefer.defer { localDataStore.getCommentsByPost(accountId, postId) })
+            .andThen(ObservableDefer.defer { localDataStore.getCommentsByPost(postId) })
             .map { result -> result.map { it.asComment } }
 
-    override fun getComment(accountId: String, postId: String, commentId: String): Observable<Optional<Comment>> =
-        remoteDataStore.getComment(accountId, postId, commentId)
+    override fun getComment(postId: String, commentId: String): Observable<Optional<Comment>> =
+        remoteDataStore.getComment(postId, commentId)
             .flatMapCompletable { comment ->
                 comment.map { localDataStore.addComment(it) }.orElse(Completable.complete())
             }
             .onErrorComplete()
-            .andThen(ObservableDefer.defer { localDataStore.getComment(accountId, postId, commentId) })
+            .andThen(ObservableDefer.defer { localDataStore.getComment(postId, commentId) })
             .map { result -> result.map { it.asComment } }
 
     override fun addComment(comment: Comment): Completable =
         localDataStore.addComment(comment.asCommentEntity)
 
-    override fun getBody(accountId: String, bodyId: String): Observable<Optional<Body>> =
-        localDataStore.getBody(accountId, bodyId)
+    override fun getBody(bodyId: String): Observable<Optional<Body>> =
+        localDataStore.getBody(bodyId)
             .map { result -> result.map { it.asBody } }
 
     override fun addBody(body: Body): Completable =

@@ -15,7 +15,6 @@ class CommentMapperSpec {
         val domain = CommentDataFactory.get()
         val expectedResult =
             CommentEntity(
-                domain.accountId,
                 domain.postId,
                 domain.id,
                 domain.bodyId,
@@ -36,7 +35,6 @@ class CommentMapperSpec {
         val entity = CommentEntityDataFactory.get()
         val expectedResult =
             Comment(
-                entity.accountId,
                 entity.postId,
                 entity.id,
                 entity.bodyId,

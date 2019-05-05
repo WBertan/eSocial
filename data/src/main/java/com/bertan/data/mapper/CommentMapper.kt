@@ -7,7 +7,6 @@ object CommentEntityMapper {
     val CommentEntity.asComment: Comment
         get() =
             Comment(
-                accountId,
                 postId,
                 id,
                 bodyId,
@@ -23,7 +22,6 @@ object CommentMapper {
     val Comment.asCommentEntity: CommentEntity
         get() =
             CommentEntity(
-                accountId,
                 postId,
                 id,
                 bodyId,

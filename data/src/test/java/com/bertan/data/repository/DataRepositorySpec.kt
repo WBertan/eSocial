@@ -45,33 +45,23 @@ class DataRepositorySpec {
         override fun getPosts(): Observable<List<PostEntity>> =
             Observable.just(posts)
 
-        override fun getPostsByAccount(accountId: String): Observable<List<PostEntity>> =
-            Observable.just(posts.filter { (it.accountId == accountId) })
-
-        override fun getPost(accountId: String, postId: String): Observable<Optional<PostEntity>> =
-            Observable.just(posts.find { it.accountId == accountId && it.id == postId }.asOptional)
+        override fun getPost(postId: String): Observable<Optional<PostEntity>> =
+            Observable.just(posts.find { it.id == postId }.asOptional)
 
         override fun addPost(post: PostEntity): Completable =
             Completable.fromAction { posts.add(post) }
 
-        override fun getCommentsByPost(accountId: String, postId: String): Observable<List<CommentEntity>> =
-            Observable.just(comments.filter { it.accountId == accountId && it.postId == postId })
+        override fun getCommentsByPost(postId: String): Observable<List<CommentEntity>> =
+            Observable.just(comments.filter { it.postId == postId })
 
-        override fun getComment(
-            accountId: String,
-            postId: String,
-            commentId: String
-        ): Observable<Optional<CommentEntity>> =
-            Observable.just(
-                comments.find
-                { it.accountId == accountId && it.postId == postId && it.id == commentId }.asOptional
-            )
+        override fun getComment(postId: String, commentId: String): Observable<Optional<CommentEntity>> =
+            Observable.just(comments.find { it.postId == postId && it.id == commentId }.asOptional)
 
         override fun addComment(comment: CommentEntity): Completable =
             Completable.fromAction { comments.add(comment) }
 
-        override fun getBody(accountId: String, bodyId: String): Observable<Optional<BodyEntity>> =
-            Observable.just(bodies.find { it.accountId == accountId && it.id == bodyId }.asOptional)
+        override fun getBody(bodyId: String): Observable<Optional<BodyEntity>> =
+            Observable.just(bodies.find { it.id == bodyId }.asOptional)
 
         override fun addBody(body: BodyEntity): Completable =
             Completable.fromAction { bodies.add(body) }
@@ -194,107 +184,61 @@ class DataRepositorySpec {
     }
 
     @Test
-    fun `given a response when getPostsByAccount it should completes and return data`() {
-        val localPosts = PostDataFactory.get(2).map { it.copy(accountId = "accountId") }
-        val localPostsEntity = localPosts.map { it.asPostEntity }
-
-        localDataStore.addPost(localPosts.first().asPostEntity).test().assertComplete()
-        localDataStore.addPost(localPosts.last().asPostEntity).test().assertComplete()
-        localDataStore.getPostsByAccount("accountId").test().assertCompletedValue(localPostsEntity)
-
-        val remotePosts = PostDataFactory.get(2).map { it.copy(accountId = "accountId") }
-        val remotePostsEntity = remotePosts.map { it.asPostEntity }
-        every { remoteDataStore.getPostsByAccount(any()) } returns Observable.just(remotePostsEntity)
-
-        val result = dataRepository.getPostsByAccount("accountId").test()
-
-        result.assertCompletedValue(localPosts + remotePosts)
-    }
-
-    @Test
-    fun `given remote failure when getPostsByAccount it should completes and return local data`() {
-        val localPosts = PostDataFactory.get(2).map { it.copy(accountId = "accountId") }
-        val localPostsEntity = localPosts.map { it.asPostEntity }
-
-        localDataStore.addPost(localPosts.first().asPostEntity).test().assertComplete()
-        localDataStore.addPost(localPosts.last().asPostEntity).test().assertComplete()
-        localDataStore.getPostsByAccount("accountId").test().assertCompletedValue(localPostsEntity)
-
-        every { remoteDataStore.getPostsByAccount(any()) } returns Observable.error(Exception("error"))
-
-        val result = dataRepository.getPostsByAccount("accountId").test()
-
-        result.assertCompletedValue(localPosts)
-    }
-
-    @Test
-    fun `given remote response when getPostsByAccount it should completes and populate local with remote data and return data`() {
-        val remotePosts = PostDataFactory.get(2).map { it.copy(accountId = "accountId") }
-        val remotePostsEntity = remotePosts.map { it.asPostEntity }
-        every { remoteDataStore.getPostsByAccount(any()) } returns Observable.just(remotePostsEntity)
-
-        val result = dataRepository.getPostsByAccount("accountId").test()
-
-        localDataStore.getPostsByAccount("accountId").test().assertCompletedValue(remotePostsEntity)
-        result.assertCompletedValue(remotePosts)
-    }
-
-    @Test
     fun `given a response when getPost it should completes and return data`() {
-        val localPost = PostDataFactory.get().copy(accountId = "accountId", id = "postId")
+        val localPost = PostDataFactory.get().copy(id = "postId")
         val localPostEntity = localPost.asPostEntity
 
         localDataStore.addPost(localPost.asPostEntity).test().assertComplete()
-        localDataStore.getPost("accountId", "postId").test().assertCompletedValue(Optional.of(localPostEntity))
+        localDataStore.getPost("postId").test().assertCompletedValue(Optional.of(localPostEntity))
 
-        val remotePost = PostDataFactory.get().copy(accountId = "accountId", id = "postId")
+        val remotePost = PostDataFactory.get().copy(id = "postId")
         val remotePostEntity = remotePost.asPostEntity
-        every { remoteDataStore.getPost(any(), any()) } returns Observable.just(Optional.of(remotePostEntity))
+        every { remoteDataStore.getPost(any()) } returns Observable.just(Optional.of(remotePostEntity))
 
-        val result = dataRepository.getPost("accountId", "postId").test()
+        val result = dataRepository.getPost("postId").test()
 
         result.assertCompletedValue(Optional.of(localPost))
     }
 
     @Test
     fun `given remote failure when getPost it should completes and return local data`() {
-        val localPost = PostDataFactory.get().copy(accountId = "accountId", id = "postId")
+        val localPost = PostDataFactory.get().copy(id = "postId")
         val localPostEntity = localPost.asPostEntity
 
         localDataStore.addPost(localPost.asPostEntity).test().assertComplete()
-        localDataStore.getPost("accountId", "postId").test().assertCompletedValue(Optional.of(localPostEntity))
+        localDataStore.getPost("postId").test().assertCompletedValue(Optional.of(localPostEntity))
 
-        every { remoteDataStore.getPost(any(), any()) } returns Observable.error(Exception("error"))
+        every { remoteDataStore.getPost(any()) } returns Observable.error(Exception("error"))
 
-        val result = dataRepository.getPost("accountId", "postId").test()
+        val result = dataRepository.getPost("postId").test()
 
         result.assertCompletedValue(Optional.of(localPost))
     }
 
     @Test
     fun `given remote not found when getPost it should completes and return local data`() {
-        val localPost = PostDataFactory.get().copy(accountId = "accountId", id = "postId")
+        val localPost = PostDataFactory.get().copy(id = "postId")
         val localPostEntity = localPost.asPostEntity
 
         localDataStore.addPost(localPost.asPostEntity).test().assertComplete()
-        localDataStore.getPost("accountId", "postId").test().assertCompletedValue(Optional.of(localPostEntity))
+        localDataStore.getPost("postId").test().assertCompletedValue(Optional.of(localPostEntity))
 
-        every { remoteDataStore.getPost(any(), any()) } returns Observable.just(Optional.empty())
+        every { remoteDataStore.getPost(any()) } returns Observable.just(Optional.empty())
 
-        val result = dataRepository.getPost("accountId", "postId").test()
+        val result = dataRepository.getPost("postId").test()
 
         result.assertCompletedValue(Optional.of(localPost))
     }
 
     @Test
     fun `given remote response when getPost it should completes and populate local with remote data and return data`() {
-        val remotePost = PostDataFactory.get().copy(accountId = "accountId", id = "postId")
+        val remotePost = PostDataFactory.get().copy(id = "postId")
         val remotePostEntity = remotePost.asPostEntity
-        every { remoteDataStore.getPost(any(), any()) } returns Observable.just(Optional.of(remotePostEntity))
+        every { remoteDataStore.getPost(any()) } returns Observable.just(Optional.of(remotePostEntity))
 
-        val result = dataRepository.getPost("accountId", "postId").test()
+        val result = dataRepository.getPost("postId").test()
 
-        localDataStore.getPost("accountId", "postId").test().assertCompletedValue(Optional.of(remotePostEntity))
+        localDataStore.getPost("postId").test().assertCompletedValue(Optional.of(remotePostEntity))
         result.assertCompletedValue(Optional.of(remotePost))
     }
 
@@ -309,117 +253,117 @@ class DataRepositorySpec {
 
     @Test
     fun `given a response when getCommentsByPost it should completes and return data`() {
-        val localComments = CommentDataFactory.get(2).map { it.copy(accountId = "accountId", postId = "postId") }
+        val localComments = CommentDataFactory.get(2).map { it.copy(postId = "postId") }
         val localCommentsEntity = localComments.map { it.asCommentEntity }
 
         localDataStore.addComment(localComments.first().asCommentEntity).test().assertComplete()
         localDataStore.addComment(localComments.last().asCommentEntity).test().assertComplete()
-        localDataStore.getCommentsByPost("accountId", "postId").test().assertCompletedValue(localCommentsEntity)
+        localDataStore.getCommentsByPost("postId").test().assertCompletedValue(localCommentsEntity)
 
-        val remoteComments = CommentDataFactory.get(2).map { it.copy(accountId = "accountId", postId = "postId") }
+        val remoteComments = CommentDataFactory.get(2).map { it.copy(postId = "postId") }
         val remoteCommentsEntity = remoteComments.map { it.asCommentEntity }
-        every { remoteDataStore.getCommentsByPost(any(), any()) } returns Observable.just(remoteCommentsEntity)
+        every { remoteDataStore.getCommentsByPost(any()) } returns Observable.just(remoteCommentsEntity)
 
-        val result = dataRepository.getCommentsByPost("accountId", "postId").test()
+        val result = dataRepository.getCommentsByPost("postId").test()
 
         result.assertCompletedValue(localComments + remoteComments)
     }
 
     @Test
     fun `given remote failure when getCommentsByPost it should completes and return local data`() {
-        val localComments = CommentDataFactory.get(2).map { it.copy(accountId = "accountId", postId = "postId") }
+        val localComments = CommentDataFactory.get(2).map { it.copy(postId = "postId") }
         val localCommentsEntity = localComments.map { it.asCommentEntity }
 
         localDataStore.addComment(localComments.first().asCommentEntity).test().assertComplete()
         localDataStore.addComment(localComments.last().asCommentEntity).test().assertComplete()
-        localDataStore.getCommentsByPost("accountId", "postId").test().assertCompletedValue(localCommentsEntity)
+        localDataStore.getCommentsByPost("postId").test().assertCompletedValue(localCommentsEntity)
 
-        every { remoteDataStore.getCommentsByPost(any(), any()) } returns Observable.error(Exception("error"))
+        every { remoteDataStore.getCommentsByPost(any()) } returns Observable.error(Exception("error"))
 
-        val result = dataRepository.getCommentsByPost("accountId", "postId").test()
+        val result = dataRepository.getCommentsByPost("postId").test()
 
         result.assertCompletedValue(localComments)
     }
 
     @Test
     fun `given remote response when getCommentsByPost it should completes and populate local with remote data and return data`() {
-        val remoteComments = CommentDataFactory.get(2).map { it.copy(accountId = "accountId", postId = "postId") }
+        val remoteComments = CommentDataFactory.get(2).map { it.copy(postId = "postId") }
         val remoteCommentsEntity = remoteComments.map { it.asCommentEntity }
-        every { remoteDataStore.getCommentsByPost(any(), any()) } returns Observable.just(remoteCommentsEntity)
+        every { remoteDataStore.getCommentsByPost(any()) } returns Observable.just(remoteCommentsEntity)
 
-        val result = dataRepository.getCommentsByPost("accountId", "postId").test()
+        val result = dataRepository.getCommentsByPost("postId").test()
 
-        localDataStore.getCommentsByPost("accountId", "postId").test().assertCompletedValue(remoteCommentsEntity)
+        localDataStore.getCommentsByPost("postId").test().assertCompletedValue(remoteCommentsEntity)
         result.assertCompletedValue(remoteComments)
     }
 
     @Test
     fun `given a response when getComment it should completes and return data`() {
-        val localComment = CommentDataFactory.get().copy(accountId = "accountId", postId = "postId", id = "commentId")
+        val localComment = CommentDataFactory.get().copy(postId = "postId", id = "commentId")
         val localCommentEntity = localComment.asCommentEntity
 
         localDataStore.addComment(localComment.asCommentEntity).test().assertComplete()
-        localDataStore.getComment("accountId", "postId", "commentId").test()
+        localDataStore.getComment("postId", "commentId").test()
             .assertCompletedValue(Optional.of(localCommentEntity))
 
-        val remoteComment = CommentDataFactory.get().copy(accountId = "accountId", postId = "postId", id = "commentId")
+        val remoteComment = CommentDataFactory.get().copy(postId = "postId", id = "commentId")
         val remoteCommentEntity = remoteComment.asCommentEntity
-        every { remoteDataStore.getComment(any(), any(), any()) } returns Observable.just(
+        every { remoteDataStore.getComment(any(), any()) } returns Observable.just(
             Optional.of(
                 remoteCommentEntity
             )
         )
 
-        val result = dataRepository.getComment("accountId", "postId", "commentId").test()
+        val result = dataRepository.getComment("postId", "commentId").test()
 
         result.assertCompletedValue(Optional.of(localComment))
     }
 
     @Test
     fun `given remote failure when getComment it should completes and return local data`() {
-        val localComment = CommentDataFactory.get().copy(accountId = "accountId", postId = "postId", id = "commentId")
+        val localComment = CommentDataFactory.get().copy(postId = "postId", id = "commentId")
         val localCommentEntity = localComment.asCommentEntity
 
         localDataStore.addComment(localComment.asCommentEntity).test().assertComplete()
-        localDataStore.getComment("accountId", "postId", "commentId").test()
+        localDataStore.getComment("postId", "commentId").test()
             .assertCompletedValue(Optional.of(localCommentEntity))
 
-        every { remoteDataStore.getComment(any(), any(), any()) } returns Observable.error(Exception("error"))
+        every { remoteDataStore.getComment(any(), any()) } returns Observable.error(Exception("error"))
 
-        val result = dataRepository.getComment("accountId", "postId", "commentId").test()
+        val result = dataRepository.getComment("postId", "commentId").test()
 
         result.assertCompletedValue(Optional.of(localComment))
     }
 
     @Test
     fun `given remote not found when getComment it should completes and return local data`() {
-        val localComment = CommentDataFactory.get().copy(accountId = "accountId", postId = "postId", id = "commentId")
+        val localComment = CommentDataFactory.get().copy(postId = "postId", id = "commentId")
         val localCommentEntity = localComment.asCommentEntity
 
         localDataStore.addComment(localComment.asCommentEntity).test().assertComplete()
-        localDataStore.getComment("accountId", "postId", "commentId").test()
+        localDataStore.getComment("postId", "commentId").test()
             .assertCompletedValue(Optional.of(localCommentEntity))
 
-        every { remoteDataStore.getComment(any(), any(), any()) } returns Observable.just(Optional.empty())
+        every { remoteDataStore.getComment(any(), any()) } returns Observable.just(Optional.empty())
 
-        val result = dataRepository.getComment("accountId", "postId", "commentId").test()
+        val result = dataRepository.getComment("postId", "commentId").test()
 
         result.assertCompletedValue(Optional.of(localComment))
     }
 
     @Test
     fun `given remote response when getComment it should completes and populate local with remote data and return data`() {
-        val remoteComment = CommentDataFactory.get().copy(accountId = "accountId", postId = "postId", id = "commentId")
+        val remoteComment = CommentDataFactory.get().copy(postId = "postId", id = "commentId")
         val remoteCommentEntity = remoteComment.asCommentEntity
-        every { remoteDataStore.getComment(any(), any(), any()) } returns Observable.just(
+        every { remoteDataStore.getComment(any(), any()) } returns Observable.just(
             Optional.of(
                 remoteCommentEntity
             )
         )
 
-        val result = dataRepository.getComment("accountId", "postId", "commentId").test()
+        val result = dataRepository.getComment("postId", "commentId").test()
 
-        localDataStore.getComment("accountId", "postId", "commentId").test()
+        localDataStore.getComment("postId", "commentId").test()
             .assertCompletedValue(Optional.of(remoteCommentEntity))
         result.assertCompletedValue(Optional.of(remoteComment))
     }
@@ -437,18 +381,18 @@ class DataRepositorySpec {
     fun `given a found response when getBody it should completes and return data`() {
         val body = BodyDataFactory.get()
         val bodyEntity = body.asBodyEntity
-        every { localDataStore.getBody(any(), any()) } returns Observable.just(Optional.of(bodyEntity))
+        every { localDataStore.getBody(any()) } returns Observable.just(Optional.of(bodyEntity))
 
-        val result = dataRepository.getBody("accountId", "bodyId").test()
+        val result = dataRepository.getBody("bodyId").test()
 
         result.assertCompletedValue(Optional.of(body))
     }
 
     @Test
     fun `given a not found response when getBody it should completes and return data`() {
-        every { localDataStore.getBody(any(), any()) } returns Observable.just(Optional.empty())
+        every { localDataStore.getBody(any()) } returns Observable.just(Optional.empty())
 
-        val result = dataRepository.getBody("notFoundId", "notFoundId").test()
+        val result = dataRepository.getBody("notFoundId").test()
 
         result.assertCompletedValue(Optional.empty())
     }

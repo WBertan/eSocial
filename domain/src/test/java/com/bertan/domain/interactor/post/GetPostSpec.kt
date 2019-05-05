@@ -32,9 +32,9 @@ class GetPostSpec {
 
     @Test
     fun `given a response when executes it should completes`() {
-        every { repository.getPost(any(), any()) } returns Observable.just(Optional.of(PostDataFactory.get()))
+        every { repository.getPost(any()) } returns Observable.just(Optional.of(PostDataFactory.get()))
 
-        val result = getPost.buildUseCase(GetPost.Param("accountId", "postId")).test()
+        val result = getPost.buildUseCase(GetPost.Param("postId")).test()
 
         result.assertComplete()
     }
@@ -56,18 +56,18 @@ class GetPostSpec {
     @Test
     fun `given a found response when executes it should return some data`() {
         val post = PostDataFactory.get()
-        every { repository.getPost(any(), any()) } returns Observable.just(Optional.of(post))
+        every { repository.getPost(any()) } returns Observable.just(Optional.of(post))
 
-        val result = getPost.buildUseCase(GetPost.Param(post.accountId, post.id)).test()
+        val result = getPost.buildUseCase(GetPost.Param(post.id)).test()
 
         result.assertValue(Optional.of(post))
     }
 
     @Test
     fun `given a not found response when executes it should return none data`() {
-        every { repository.getPost(any(), any()) } returns Observable.just(Optional.empty())
+        every { repository.getPost(any()) } returns Observable.just(Optional.empty())
 
-        val result = getPost.buildUseCase(GetPost.Param("notFoundId", "notFoundId")).test()
+        val result = getPost.buildUseCase(GetPost.Param("notFoundId")).test()
 
         result.assertValue(Optional.empty())
     }

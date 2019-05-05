@@ -24,18 +24,17 @@ interface AccountsRepository {
 
 interface PostsRepository {
     fun getPosts(): Observable<List<Post>>
-    fun getPostsByAccount(accountId: String): Observable<List<Post>>
-    fun getPost(accountId: String, postId: String): Observable<Optional<Post>>
+    fun getPost(postId: String): Observable<Optional<Post>>
     fun addPost(post: Post): Completable
 }
 
 interface CommentsRepository {
-    fun getCommentsByPost(accountId: String, postId: String): Observable<List<Comment>>
-    fun getComment(accountId: String, postId: String, commentId: String): Observable<Optional<Comment>>
+    fun getCommentsByPost(postId: String): Observable<List<Comment>>
+    fun getComment(postId: String, commentId: String): Observable<Optional<Comment>>
     fun addComment(comment: Comment): Completable
 }
 
 interface BodiesRepository {
-    fun getBody(accountId: String, bodyId: String): Observable<Optional<Body>>
+    fun getBody(bodyId: String): Observable<Optional<Body>>
     fun addBody(body: Body): Completable
 }

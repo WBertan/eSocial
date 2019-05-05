@@ -32,9 +32,9 @@ class GetBodySpec {
 
     @Test
     fun `given a response when executes it should completes`() {
-        every { repository.getBody(any(), any()) } returns Observable.just(Optional.of(BodyDataFactory.get()))
+        every { repository.getBody(any()) } returns Observable.just(Optional.of(BodyDataFactory.get()))
 
-        val result = getBody.buildUseCase(GetBody.Param("accountId", "bodyId")).test()
+        val result = getBody.buildUseCase(GetBody.Param("bodyId")).test()
 
         result.assertComplete()
     }
@@ -56,18 +56,18 @@ class GetBodySpec {
     @Test
     fun `given a found response when executes it should return some data`() {
         val body = BodyDataFactory.get()
-        every { repository.getBody(any(), any()) } returns Observable.just(Optional.of(body))
+        every { repository.getBody(any()) } returns Observable.just(Optional.of(body))
 
-        val result = getBody.buildUseCase(GetBody.Param(body.accountId, body.id)).test()
+        val result = getBody.buildUseCase(GetBody.Param(body.id)).test()
 
         result.assertValue(Optional.of(body))
     }
 
     @Test
     fun `given a not found response when executes it should return none data`() {
-        every { repository.getBody(any(), any()) } returns Observable.just(Optional.empty())
+        every { repository.getBody(any()) } returns Observable.just(Optional.empty())
 
-        val result = getBody.buildUseCase(GetBody.Param("notFoundId", "notFoundId")).test()
+        val result = getBody.buildUseCase(GetBody.Param("notFoundId")).test()
 
         result.assertValue(Optional.empty())
     }

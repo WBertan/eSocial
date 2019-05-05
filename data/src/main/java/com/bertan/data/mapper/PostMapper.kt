@@ -7,7 +7,6 @@ object PostEntityMapper {
     val PostEntity.asPost: Post
         get() =
             Post(
-                accountId,
                 id,
                 title,
                 bodyId,
@@ -20,7 +19,6 @@ object PostMapper {
     val Post.asPostEntity: PostEntity
         get() =
             PostEntity(
-                accountId,
                 id,
                 title,
                 bodyId,

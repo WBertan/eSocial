@@ -12,7 +12,7 @@ class GetCommentsByPost(
 ) : ObservableUseCase<List<Comment>, GetCommentsByPost.Param>(executor) {
 
     override fun buildUseCase(params: Param?): Observable<List<Comment>> =
-        params.validate { repository.getCommentsByPost(it.accountId, it.postId) }
+        params.validate { repository.getCommentsByPost(it.postId) }
 
-    data class Param(val accountId: String, val postId: String)
+    data class Param(val postId: String)
 }

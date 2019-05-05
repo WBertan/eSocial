@@ -57,7 +57,6 @@ object PostEntityDataFactory : EntityDataFactory<PostEntity>() {
             randomString(),
             randomString(),
             randomString(),
-            randomString(),
             randomLong()
         )
 }
@@ -72,7 +71,6 @@ object CommentEntityDataFactory : EntityDataFactory<CommentEntity>() {
             randomString(),
             randomString(),
             randomString(),
-            randomString(),
             randomLong()
         )
 }
@@ -80,7 +78,6 @@ object CommentEntityDataFactory : EntityDataFactory<CommentEntity>() {
 object BodyEntityDataFactory : EntityDataFactory<BodyEntity>() {
     override fun get(): BodyEntity =
         BodyEntity(
-            randomString(),
             randomString(),
             randomTypeEntity(),
             randomString()

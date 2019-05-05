@@ -57,7 +57,6 @@ object PostDataFactory : DataFactory<Post>() {
             randomString(),
             randomString(),
             randomString(),
-            randomString(),
             randomLong()
         )
 }
@@ -72,7 +71,6 @@ object CommentDataFactory : DataFactory<Comment>() {
             randomString(),
             randomString(),
             randomString(),
-            randomString(),
             randomLong()
         )
 }
@@ -80,7 +78,6 @@ object CommentDataFactory : DataFactory<Comment>() {
 object BodyDataFactory : DataFactory<Body>() {
     override fun get(): Body =
         Body(
-            randomString(),
             randomString(),
             randomType(),
             randomString()
