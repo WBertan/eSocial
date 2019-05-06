@@ -109,7 +109,6 @@ ext {
     presentationTestDependencies = [
             jUnit          : "junit:junit:$junit_version",
             mockK          : "io.mockk:mockk:$mockk_version",
-            robolectric    : "org.robolectric:robolectric:$robolectric_version",
             archCoreTesting: "androidx.arch.core:core-testing:${androidx.archComponent_version}"
     ]
 }

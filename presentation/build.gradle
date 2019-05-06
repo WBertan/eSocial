@@ -36,7 +36,6 @@ dependencies {
 
     testImplementation presentationTestDependencies.jUnit
     testImplementation presentationTestDependencies.mockK
-    testImplementation presentationTestDependencies.robolectric
     testImplementation presentationTestDependencies.archCoreTesting
 }
 
