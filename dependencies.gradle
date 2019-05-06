@@ -7,8 +7,13 @@ ext {
     androidx = [
             appcompat_version    : '1.0.2',
             archComponent_version: '2.0.1',
-            lifecycle_version    : '2.0.0'
+            lifecycle_version    : '2.0.0',
+            core_version         : '1.0.1',
+            testRunner_version   : '1.1.1',
+            testEspresso_version : '3.1.1'
     ]
+
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     //Gradle
     gradleBuildTools = '3.4.0'
@@ -33,6 +38,15 @@ ext {
     junit_version = '4.12'
     mockk_version = '1.9'
     robolectric_version = '3.4.2'
+
+    //Logs
+    timber_version = '4.7.1'
+
+    //Image Loading
+    picasso_version = '2.71828'
+
+    //DI
+    dagger_version = '2.22.1'
 
     domainDependencies = [
             kotlin: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -110,5 +124,34 @@ ext {
             jUnit          : "junit:junit:$junit_version",
             mockK          : "io.mockk:mockk:$mockk_version",
             archCoreTesting: "androidx.arch.core:core-testing:${androidx.archComponent_version}"
+    ]
+
+    appKaptDependencies = [
+            lifecycleCompiler: "androidx.lifecycle:lifecycle-compiler:${androidx.lifecycle_version}",
+            daggerCompiler   : "com.google.dagger:dagger-compiler:$dagger_version"
+    ]
+
+    appDependencies = [
+            coreKtx            : "androidx.core:core-ktx:${androidx.core_version}",
+            appCompat          : "androidx.appcompat:appcompat:${androidx.appcompat_version}",
+            kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+            lifecycleRuntime   : "androidx.lifecycle:lifecycle-runtime:${androidx.lifecycle_version}",
+            lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${androidx.lifecycle_version}",
+            rxKotlin           : "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version",
+            rxAndroid          : "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
+            picasso            : "com.squareup.picasso:picasso:$picasso_version",
+            timber             : "com.jakewharton.timber:timber:$timber_version",
+            dagger             : "com.google.dagger:dagger:$dagger_version"
+    ]
+
+    appTestDependencies = [
+            jUnit          : "junit:junit:$junit_version",
+            mockK          : "io.mockk:mockk:$mockk_version",
+            archCoreTesting: "androidx.arch.core:core-testing:${androidx.archComponent_version}"
+    ]
+
+    appAndroidTestDependencies = [
+            testRunner      : "androidx.test:runner:${androidx.testRunner_version}",
+            testEspressoCore: "androidx.test.espresso:espresso-core:${androidx.testEspresso_version}"
     ]
 }
