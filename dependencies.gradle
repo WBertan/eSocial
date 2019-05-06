@@ -127,7 +127,8 @@ ext {
     ]
 
     appKaptDependencies = [
-            lifecycleCompiler: "androidx.lifecycle:lifecycle-compiler:${androidx.lifecycle_version}"
+            lifecycleCompiler: "androidx.lifecycle:lifecycle-compiler:${androidx.lifecycle_version}",
+            roomCompiler     : "androidx.room:room-compiler:$room_version" //TODO(Need to remove later, only added because it was complaining of supertypes not available - Because the LocalDatabase.Factory)
     ]
 
     appDependencies = [
@@ -143,7 +144,9 @@ ext {
             koinCore             : "org.koin:koin-core:$koin_version",
             koinAndroid          : "org.koin:koin-android:$koin_version",
             koinAndroidxScope    : "org.koin:koin-androidx-scope:$koin_version",
-            koinAndroidxViewModel: "org.koin:koin-androidx-viewmodel:$koin_version"
+            koinAndroidxViewModel: "org.koin:koin-androidx-viewmodel:$koin_version",
+            roomRuntime          : "androidx.room:room-runtime:$room_version", //TODO(Need to remove later, only added because it was complaining of supertypes not available - Because the LocalDatabase.Factory)
+            roomRxJava           : "androidx.room:room-rxjava2:$room_version" //TODO(Need to remove later, only added because it was complaining of supertypes not available - Because the LocalDatabase.Factory)
     ]
 
     appTestDependencies = [
