@@ -120,7 +120,7 @@ class AccountViewModelSpec {
         accountViewModel.addAccount(accountView)
 
         assertEquals(
-            ViewState.Error("Failed to add ${accountView}!", dummyError),
+            ViewState.Error("Failed to add $accountView!", dummyError),
             accountViewModel.getState().value
         )
     }

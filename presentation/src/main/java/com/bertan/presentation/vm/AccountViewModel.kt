@@ -15,6 +15,7 @@ class AccountViewModel(private val getAccountUseCase: GetAccount, private val ad
         postLoading()
 
         getAccountUseCase.execute(
+            GetAccount.Param(accountId),
             onNext = { account -> account.map { it.asAccountView }.postSuccess() },
             onError = { it.postError("Failed to load Account($accountId)!") }
         )

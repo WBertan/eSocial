@@ -15,6 +15,7 @@ class PostViewModel(private val getPostUseCase: GetPost, private val addPostUseC
         postLoading()
 
         getPostUseCase.execute(
+            GetPost.Param(postId),
             onNext = { post -> post.map { it.asPostView }.postSuccess() },
             onError = { it.postError("Failed to load Post($postId)!") }
         )

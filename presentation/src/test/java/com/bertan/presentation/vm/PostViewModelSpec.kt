@@ -120,7 +120,7 @@ class PostViewModelSpec {
         postViewModel.addPost(postView)
 
         assertEquals(
-            ViewState.Error("Failed to add ${postView}!", dummyError),
+            ViewState.Error("Failed to add $postView!", dummyError),
             postViewModel.getState().value
         )
     }
