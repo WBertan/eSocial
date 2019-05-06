@@ -14,6 +14,7 @@ abstract class ModelDataFactory<T> {
     fun randomBoolean(): Boolean = Math.random() < 0.5
     fun randomInt(bound: Int = Int.MAX_VALUE): Int = Random().nextInt(bound)
     fun randomLong(): Long = randomInt().toLong()
+    fun randomBodyType(): String = listOf("text", "image", "video").random()
 }
 
 object SourceModelDataFactory : ModelDataFactory<SourceModel>() {
@@ -58,7 +59,7 @@ object PostModelDataFactory : ModelDataFactory<PostModel>() {
         PostModel(
             randomString(),
             randomString(),
-            randomString(),
+            randomBodyType(),
             randomString(),
             randomString(),
             randomLong()
@@ -70,7 +71,7 @@ object CommentModelDataFactory : ModelDataFactory<CommentModel>() {
         CommentModel(
             randomString(),
             randomString(),
-            randomString(),
+            randomBodyType(),
             randomString(),
             randomString(),
             randomString(),
