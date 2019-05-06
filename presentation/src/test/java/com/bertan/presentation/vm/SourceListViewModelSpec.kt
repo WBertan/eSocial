@@ -21,7 +21,7 @@ class SourceListViewModelSpec {
     private lateinit var sourceListViewModel: SourceListViewModel
 
     @MockK(relaxed = true)
-    private lateinit var getSources: GetSources
+    private lateinit var getSourcesUseCase: GetSources
     @MockK
     private lateinit var lifecycleOwner: LifecycleOwner
 
@@ -30,7 +30,7 @@ class SourceListViewModelSpec {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        sourceListViewModel = SourceListViewModel(getSources)
+        sourceListViewModel = SourceListViewModel(getSourcesUseCase)
 
         lifecycle = LifecycleRegistry(lifecycleOwner)
         lifecycle.addObserver(sourceListViewModel)
@@ -40,8 +40,8 @@ class SourceListViewModelSpec {
     fun `given a lifecycle when ON_CREATE it should execute use case`() {
         lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
 
-        verify(exactly = 1) { getSources.execute(null, any(), any(), any()) }
-        confirmVerified(getSources)
+        verify(exactly = 1) { getSourcesUseCase.execute(null, any(), any(), any()) }
+        confirmVerified(getSourcesUseCase)
     }
 
     @Test
@@ -53,7 +53,7 @@ class SourceListViewModelSpec {
 
     @Test
     fun `given a success use case when executes it should post success state`() {
-        every { getSources.execute(null, captureLambda(), any(), any()) } answers {
+        every { getSourcesUseCase.execute(null, captureLambda(), any(), any()) } answers {
             lambda<Function1<List<Source>, Unit>>().invoke(emptyList())
             mockk()
         }
@@ -66,7 +66,7 @@ class SourceListViewModelSpec {
     @Test
     fun `given a failure use case when executes it should post error state`() {
         val dummyError = Exception("dummyError")
-        every { getSources.execute(null, any(), captureLambda(), any()) } answers {
+        every { getSourcesUseCase.execute(null, any(), captureLambda(), any()) } answers {
             lambda<Function1<Throwable, Unit>>().invoke(dummyError)
             mockk()
         }

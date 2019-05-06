@@ -21,7 +21,7 @@ class AccountListViewModelSpec {
     private lateinit var accountListViewModel: AccountListViewModel
 
     @MockK(relaxed = true)
-    private lateinit var getAccounts: GetAccounts
+    private lateinit var getAccountsUseCase: GetAccounts
     @MockK
     private lateinit var lifecycleOwner: LifecycleOwner
 
@@ -30,7 +30,7 @@ class AccountListViewModelSpec {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        accountListViewModel = AccountListViewModel(getAccounts)
+        accountListViewModel = AccountListViewModel(getAccountsUseCase)
 
         lifecycle = LifecycleRegistry(lifecycleOwner)
         lifecycle.addObserver(accountListViewModel)
@@ -40,8 +40,8 @@ class AccountListViewModelSpec {
     fun `given a lifecycle when ON_CREATE it should execute use case`() {
         lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
 
-        verify(exactly = 1) { getAccounts.execute(null, any(), any(), any()) }
-        confirmVerified(getAccounts)
+        verify(exactly = 1) { getAccountsUseCase.execute(null, any(), any(), any()) }
+        confirmVerified(getAccountsUseCase)
     }
 
     @Test
@@ -53,7 +53,7 @@ class AccountListViewModelSpec {
 
     @Test
     fun `given a success use case when executes it should post success state`() {
-        every { getAccounts.execute(null, captureLambda(), any(), any()) } answers {
+        every { getAccountsUseCase.execute(null, captureLambda(), any(), any()) } answers {
             lambda<Function1<List<Account>, Unit>>().invoke(emptyList())
             mockk()
         }
@@ -66,7 +66,7 @@ class AccountListViewModelSpec {
     @Test
     fun `given a failure use case when executes it should post error state`() {
         val dummyError = Exception("dummyError")
-        every { getAccounts.execute(null, any(), captureLambda(), any()) } answers {
+        every { getAccountsUseCase.execute(null, any(), captureLambda(), any()) } answers {
             lambda<Function1<Throwable, Unit>>().invoke(dummyError)
             mockk()
         }
