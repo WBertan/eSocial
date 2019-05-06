@@ -46,6 +46,7 @@ dependencies {
     implementation appDependencies.rxAndroid
     implementation appDependencies.picasso
     implementation appDependencies.timber
+    implementation appDependencies.koinCore
     implementation appDependencies.koinAndroid
     implementation appDependencies.koinAndroidxScope
     implementation appDependencies.koinAndroidxViewModel

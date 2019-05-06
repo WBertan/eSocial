@@ -46,7 +46,7 @@ ext {
     picasso_version = '2.71828'
 
     //DI
-    koin_version = '2.0.0-GA'
+    koin_version = '1.0.2'
 
     domainDependencies = [
             kotlin: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -140,6 +140,7 @@ ext {
             rxAndroid            : "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
             picasso              : "com.squareup.picasso:picasso:$picasso_version",
             timber               : "com.jakewharton.timber:timber:$timber_version",
+            koinCore             : "org.koin:koin-core:$koin_version",
             koinAndroid          : "org.koin:koin-android:$koin_version",
             koinAndroidxScope    : "org.koin:koin-androidx-scope:$koin_version",
             koinAndroidxViewModel: "org.koin:koin-androidx-viewmodel:$koin_version"
