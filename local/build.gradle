@@ -36,6 +36,7 @@ dependencies {
     testImplementation localTestDependencies.mockK
     testImplementation localTestDependencies.roomTesting
     testImplementation localTestDependencies.robolectric
+    testImplementation localTestDependencies.archCoreTesting
 }
 
 sourceCompatibility = "8"
