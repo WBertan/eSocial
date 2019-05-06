@@ -58,6 +58,8 @@ dependencies {
     implementation appDependencies.koinAndroidxViewModel
     implementation appDependencies.roomRuntime
     implementation appDependencies.roomRxJava
+    implementation appDependencies.constraintLayout
+    implementation appDependencies.recyclerView
 
     testImplementation appTestDependencies.jUnit
     testImplementation appTestDependencies.mockK

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">eSocial</string>
+    <string name="contentDescriptionLogo">Logo of the app</string>
+    <string name="contentDescriptionSourceLogo">Logo of the source to connect</string>
+    <string name="onboard_description">Select source below</string>
 </resources>

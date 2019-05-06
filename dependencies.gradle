@@ -10,7 +10,9 @@ ext {
             lifecycle_version    : '2.0.0',
             core_version         : '1.0.1',
             testRunner_version   : '1.1.1',
-            testEspresso_version : '3.1.1'
+            testEspresso_version : '3.1.1',
+            constraint_version   : '1.1.2',
+            recyclerView_version : '1.0.0'
     ]
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -146,7 +148,9 @@ ext {
             koinAndroidxScope    : "org.koin:koin-androidx-scope:$koin_version",
             koinAndroidxViewModel: "org.koin:koin-androidx-viewmodel:$koin_version",
             roomRuntime          : "androidx.room:room-runtime:$room_version", //TODO(Need to remove later, only added because it was complaining of supertypes not available - Because the LocalDatabase.Factory)
-            roomRxJava           : "androidx.room:room-rxjava2:$room_version" //TODO(Need to remove later, only added because it was complaining of supertypes not available - Because the LocalDatabase.Factory)
+            roomRxJava           : "androidx.room:room-rxjava2:$room_version", //TODO(Need to remove later, only added because it was complaining of supertypes not available - Because the LocalDatabase.Factory)
+            constraintLayout     : "androidx.constraintlayout:constraintlayout:${androidx.constraint_version}",
+            recyclerView         : "androidx.recyclerview:recyclerview:${androidx.recyclerView_version}"
     ]
 
     appTestDependencies = [
