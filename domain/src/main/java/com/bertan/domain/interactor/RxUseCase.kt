@@ -37,7 +37,12 @@ abstract class CompletableUseCase<Params>(private val executor: SchedulerExecuto
 
 abstract class ObservableUseCase<T, Params>(private val executor: SchedulerExecutor) :
     RxUseCase<Params, Observable<T>>() {
-    fun execute(params: Params? = null, onNext: (T) -> Unit, onComplete: () -> Unit, onError: (Throwable) -> Unit) =
+    fun execute(
+        params: Params? = null,
+        onNext: (T) -> Unit,
+        onError: (Throwable) -> Unit,
+        onComplete: () -> Unit = {}
+    ) =
         buildUseCase(params)
             .subscribeOn(Schedulers.io())
             .observeOn(executor.scheduler)
