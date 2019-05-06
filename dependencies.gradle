@@ -46,7 +46,7 @@ ext {
     picasso_version = '2.71828'
 
     //DI
-    dagger_version = '2.22.1'
+    koin_version = '2.0.0-GA'
 
     domainDependencies = [
             kotlin: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
@@ -127,27 +127,29 @@ ext {
     ]
 
     appKaptDependencies = [
-            lifecycleCompiler: "androidx.lifecycle:lifecycle-compiler:${androidx.lifecycle_version}",
-            daggerCompiler   : "com.google.dagger:dagger-compiler:$dagger_version"
+            lifecycleCompiler: "androidx.lifecycle:lifecycle-compiler:${androidx.lifecycle_version}"
     ]
 
     appDependencies = [
-            coreKtx            : "androidx.core:core-ktx:${androidx.core_version}",
-            appCompat          : "androidx.appcompat:appcompat:${androidx.appcompat_version}",
-            kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
-            lifecycleRuntime   : "androidx.lifecycle:lifecycle-runtime:${androidx.lifecycle_version}",
-            lifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${androidx.lifecycle_version}",
-            rxKotlin           : "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version",
-            rxAndroid          : "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
-            picasso            : "com.squareup.picasso:picasso:$picasso_version",
-            timber             : "com.jakewharton.timber:timber:$timber_version",
-            dagger             : "com.google.dagger:dagger:$dagger_version"
+            coreKtx              : "androidx.core:core-ktx:${androidx.core_version}",
+            appCompat            : "androidx.appcompat:appcompat:${androidx.appcompat_version}",
+            kotlin               : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
+            lifecycleRuntime     : "androidx.lifecycle:lifecycle-runtime:${androidx.lifecycle_version}",
+            lifecycleExtensions  : "androidx.lifecycle:lifecycle-extensions:${androidx.lifecycle_version}",
+            rxKotlin             : "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version",
+            rxAndroid            : "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
+            picasso              : "com.squareup.picasso:picasso:$picasso_version",
+            timber               : "com.jakewharton.timber:timber:$timber_version",
+            koinAndroid          : "org.koin:koin-android:$koin_version",
+            koinAndroidxScope    : "org.koin:koin-androidx-scope:$koin_version",
+            koinAndroidxViewModel: "org.koin:koin-androidx-viewmodel:$koin_version"
     ]
 
     appTestDependencies = [
             jUnit          : "junit:junit:$junit_version",
             mockK          : "io.mockk:mockk:$mockk_version",
-            archCoreTesting: "androidx.arch.core:core-testing:${androidx.archComponent_version}"
+            archCoreTesting: "androidx.arch.core:core-testing:${androidx.archComponent_version}",
+            koinTest       : "org.koin:koin-test:$koin_version"
     ]
 
     appAndroidTestDependencies = [

@@ -36,7 +36,6 @@ dependencies {
     def appAndroidTestDependencies = rootProject.ext.appAndroidTestDependencies
 
     kapt(appKaptDependencies.lifecycleCompiler)
-    kapt(appKaptDependencies.daggerCompiler)
 
     implementation appDependencies.coreKtx
     implementation appDependencies.appCompat
@@ -47,15 +46,14 @@ dependencies {
     implementation appDependencies.rxAndroid
     implementation appDependencies.picasso
     implementation appDependencies.timber
-    implementation appDependencies.dagger
-
-    kaptTest(appKaptDependencies.daggerCompiler)
+    implementation appDependencies.koinAndroid
+    implementation appDependencies.koinAndroidxScope
+    implementation appDependencies.koinAndroidxViewModel
 
     testImplementation appTestDependencies.jUnit
     testImplementation appTestDependencies.mockK
     testImplementation appTestDependencies.archCoreTesting
-
-    kaptAndroidTest(appKaptDependencies.daggerCompiler)
+    testImplementation appTestDependencies.koinTest
 
     androidTestImplementation appAndroidTestDependencies.testRunner
     androidTestImplementation appAndroidTestDependencies.testEspressoCore
