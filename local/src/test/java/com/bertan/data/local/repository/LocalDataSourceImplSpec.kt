@@ -9,15 +9,13 @@ import com.bertan.data.local.test.AccountModelDataFactory
 import com.bertan.data.local.test.CommentModelDataFactory
 import com.bertan.data.local.test.PostModelDataFactory
 import com.bertan.data.model.SourceEntity
-import io.mockk.MockKAnnotations
-import io.mockk.confirmVerified
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -31,7 +29,16 @@ class LocalDataSourceImplSpec {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        dataSource = LocalDataSourceImpl(database)
+
+        mockkConstructor(LocalDatabase.Factory::class)
+        every { anyConstructed<LocalDatabase.Factory>()() } returns database
+
+        dataSource = LocalDataSourceImpl(mockk())
+    }
+
+    @After
+    fun tearDown() {
+        unmockkConstructor(LocalDatabase.Factory::class)
     }
 
     private fun <T> TestObserver<T>.assertCompletedValue(expected: T) {
