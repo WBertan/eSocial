@@ -72,5 +72,7 @@ dependencies {
     testImplementation appTestDependencies.robolectric
 
     androidTestImplementation appAndroidTestDependencies.testRunner
+    androidTestImplementation appAndroidTestDependencies.testRules
     androidTestImplementation appAndroidTestDependencies.testEspressoCore
+    androidTestImplementation appAndroidTestDependencies.mockK
 }

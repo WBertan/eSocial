@@ -2,7 +2,7 @@ package com.bertan.esocial.ui.activity
 
 import android.view.View
 import android.view.View.VISIBLE
-import androidx.lifecycle.Observer
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bertan.esocial.R
 import com.bertan.esocial.TestApplication
@@ -29,23 +29,12 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.annotation.Config
 
-typealias SourceViewModelState = List<SourceView>
-typealias SourceViewModelObserver = Observer<ViewState<SourceViewModelState>>
-
 @RunWith(RobolectricTestRunner::class)
 @Config(application = TestApplication::class)
 class OnboardActivitySpec : KoinTest {
-    private var sourceViewModelStateObserver: SourceViewModelObserver? = null
-
+    private val liveData: MutableLiveData<ViewState<List<SourceView>>> = MutableLiveData()
     private val sourceListViewModel: SourceListViewModel = mockk {
-        every { getState() } answers {
-            mockk {
-                val slot = CapturingSlot<SourceViewModelObserver>()
-                every { observe(any(), capture(slot)) } answers {
-                    sourceViewModelStateObserver = slot.captured
-                }
-            }
-        }
+        every { getState() } returns liveData
         every { onCreate() } returns Unit
     }
 
@@ -92,7 +81,7 @@ class OnboardActivitySpec : KoinTest {
 
         every { activityController.get().showMessage(any()) } returns Unit
 
-        sourceViewModelStateObserver?.onChanged(ViewState.Error("dummyMessage", Exception("dummyException")))
+        liveData.postValue(ViewState.Error("dummyMessage", Exception("dummyException")))
 
         val sources = activityController.get().findViewById<RecyclerView>(R.id.sources)
 
@@ -108,7 +97,7 @@ class OnboardActivitySpec : KoinTest {
 
         createActivity().setup()
 
-        sourceViewModelStateObserver?.onChanged(ViewState.Success(SourceViewDataFactory.get(2)))
+        liveData.postValue(ViewState.Success(SourceViewDataFactory.get(2)))
 
         val sources = activityController.get().findViewById<RecyclerView>(R.id.sources)
 
