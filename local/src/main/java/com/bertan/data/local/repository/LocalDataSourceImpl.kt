@@ -1,5 +1,6 @@
 package com.bertan.data.local.repository
 
+import android.content.Context
 import com.bertan.data.local.db.LocalDatabase
 import com.bertan.data.local.mapper.AccountEntityMapper.asAccountModel
 import com.bertan.data.local.mapper.AccountModelMapper.asAccountEntity
@@ -16,7 +17,11 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import java.util.*
 
-class LocalDataSourceImpl(private val database: LocalDatabase) : LocalDataSource {
+class LocalDataSourceImpl(private val context: Context) : LocalDataSource {
+    private val database: LocalDatabase by lazy {
+        LocalDatabase.Factory(context)()
+    }
+
     override fun getSources(): Observable<List<SourceEntity>> =
         Observable.just(
             listOf(

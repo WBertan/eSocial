@@ -20,7 +20,7 @@ import com.bertan.data.local.model.PostModel
     version = 1
 )
 abstract class LocalDatabase : RoomDatabase() {
-    class Factory(context: Context) : () -> LocalDatabase {
+    internal class Factory(context: Context) : () -> LocalDatabase {
         private val database: LocalDatabase by lazy {
             Room
                 .databaseBuilder(context.applicationContext, LocalDatabase::class.java, "localDatabase")

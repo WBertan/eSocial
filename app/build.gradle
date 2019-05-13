@@ -41,7 +41,6 @@ dependencies {
     def appAndroidTestDependencies = rootProject.ext.appAndroidTestDependencies
 
     kapt(appKaptDependencies.lifecycleCompiler)
-    kapt(appKaptDependencies.roomCompiler)
 
     implementation appDependencies.coreKtx
     implementation appDependencies.appCompat
@@ -56,8 +55,6 @@ dependencies {
     implementation appDependencies.koinAndroid
     implementation appDependencies.koinAndroidxScope
     implementation appDependencies.koinAndroidxViewModel
-    implementation appDependencies.roomRuntime
-    implementation appDependencies.roomRxJava
     implementation appDependencies.constraintLayout
     implementation appDependencies.recyclerView
 

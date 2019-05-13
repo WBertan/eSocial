@@ -1,6 +1,5 @@
 package com.bertan.esocial.di
 
-import com.bertan.data.local.db.LocalDatabase
 import com.bertan.data.local.repository.LocalDataSourceImpl
 import com.bertan.data.remote.repository.RemoteDataSourceImpl
 import com.bertan.data.remote.service.JSONPlaceholderServiceFactory
@@ -33,13 +32,8 @@ val dataModule: Module = module {
     }
 
     single {
-        LocalDatabase.Factory(
-            context = get()
-        )()
-    }
-    single {
         LocalDataSourceImpl(
-            database = get()
+            context = get()
         ) as LocalDataSource
     }
     single {
