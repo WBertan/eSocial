@@ -39,7 +39,7 @@ ext {
     //Tests
     junit_version = '4.12'
     mockk_version = '1.9'
-    robolectric_version = '3.4.2'
+    robolectric_version = '4.2'
 
     //Logs
     timber_version = '4.7.1'
@@ -158,7 +158,8 @@ ext {
             jUnit          : "junit:junit:$junit_version",
             mockK          : "io.mockk:mockk:$mockk_version",
             archCoreTesting: "androidx.arch.core:core-testing:${androidx.archComponent_version}",
-            koinTest       : "org.koin:koin-test:$koin_version"
+            koinTest       : "org.koin:koin-test:$koin_version",
+            robolectric    : "org.robolectric:robolectric:$robolectric_version"
     ]
 
     appAndroidTestDependencies = [

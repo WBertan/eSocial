@@ -9,17 +9,17 @@ abstract class RxUseCaseViewModel<T>(private vararg val useCases: RxUseCase<*, *
     protected fun T.postSuccess() = postState(ViewState.Success(this))
     protected fun Throwable?.postError(message: String) = postState(ViewState.Error(message, this))
 
-    private val state: MutableLiveData<ViewState<T>> = MutableLiveData()
+    private val viewModelState: MutableLiveData<ViewState<T>> = MutableLiveData()
 
-    fun getState(): LiveData<ViewState<T>> = state
+    fun getState(): LiveData<ViewState<T>> = viewModelState
 
-    private fun postState(value: ViewState<T>) = state.postValue(value)
+    private fun postState(value: ViewState<T>) = viewModelState.postValue(value)
 
     abstract fun onCreateViewModel()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        if (state.value == null) {
+        if (viewModelState.value == null) {
             onCreateViewModel()
         }
     }

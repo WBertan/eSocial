@@ -22,6 +22,12 @@ android {
         }
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,6 +69,7 @@ dependencies {
     testImplementation appTestDependencies.mockK
     testImplementation appTestDependencies.archCoreTesting
     testImplementation appTestDependencies.koinTest
+    testImplementation appTestDependencies.robolectric
 
     androidTestImplementation appAndroidTestDependencies.testRunner
     androidTestImplementation appAndroidTestDependencies.testEspressoCore
