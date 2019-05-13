@@ -57,6 +57,7 @@ dependencies {
     implementation appDependencies.koinAndroidxViewModel
     implementation appDependencies.constraintLayout
     implementation appDependencies.recyclerView
+    implementation appDependencies.materialDesign
 
     testImplementation appTestDependencies.jUnit
     testImplementation appTestDependencies.mockK

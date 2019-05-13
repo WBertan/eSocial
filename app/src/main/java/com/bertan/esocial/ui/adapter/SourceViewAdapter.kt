@@ -1,44 +1,25 @@
 package com.bertan.esocial.ui.adapter
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bertan.esocial.R
+import com.bertan.esocial.extension.asBoolean
+import com.bertan.esocial.extension.loadUrl
+import com.bertan.esocial.extension.toColorStateList
 import com.bertan.presentation.model.SourceView
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_source_item.view.*
 
 class SourceViewAdapter(private val sources: List<SourceView>) : RecyclerView.Adapter<SourceViewAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(source: SourceView) {
-            Picasso //TODO(Move to DI)
-                    .get()
-                    .load(source.icon)
-                    .into(itemView.logo)
+            itemView.logo.loadUrl(source.icon)
 
             itemView.button.apply {
                 text = source.name
-                val color: Int =
-                        when (val sourceColour = source.colour) {
-                            is SourceView.ColourView.RGB -> {
-                                val (red, green, blue) = sourceColour
-                                Color.rgb(red, green, blue)
-                            }
-                            is SourceView.ColourView.Hex ->
-                                Color.parseColor(sourceColour.value)
-                        }
-                backgroundTintList = ColorStateList.valueOf(color)
-            }
-
-            when (source.state) {
-                is SourceView.StateView.Enabled ->
-                    Unit
-                is SourceView.StateView.Disabled -> {
-                    itemView.button.isEnabled = false
-                }
+                backgroundTintList = source.colour.toColorStateList
+                isEnabled = source.state.asBoolean
             }
         }
     }

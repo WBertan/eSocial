@@ -1,10 +1,10 @@
 package com.bertan.esocial.ui.activity
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bertan.esocial.R
+import com.bertan.esocial.extension.showMessage
 import com.bertan.esocial.ui.adapter.SourceViewAdapter
 import com.bertan.presentation.model.SourceView
 import com.bertan.presentation.state.ViewState
@@ -25,11 +25,10 @@ class OnboardActivity : AppCompatActivity() {
     private fun handleState(viewState: ViewState<List<SourceView>>) =
             when (viewState) {
                 is ViewState.Loading ->
-                    Toast.makeText(this, "Loading!", Toast.LENGTH_SHORT).show()
-                is ViewState.Success -> {
+                    Unit
+                is ViewState.Success ->
                     sources.adapter = SourceViewAdapter(viewState.data)
-                }
                 is ViewState.Error ->
-                    Toast.makeText(this, "Error: ${viewState.message}", Toast.LENGTH_SHORT).show()
+                    showMessage("Error: ${viewState.message}")
             }
 }

@@ -50,6 +50,9 @@ ext {
     //DI
     koin_version = '1.0.2'
 
+    //UI
+    material_version = '1.0.0'
+
     domainDependencies = [
             kotlin: "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version",
             rxJava: "io.reactivex.rxjava2:rxjava:$rxjava_version"
@@ -147,7 +150,8 @@ ext {
             koinAndroidxScope    : "org.koin:koin-androidx-scope:$koin_version",
             koinAndroidxViewModel: "org.koin:koin-androidx-viewmodel:$koin_version",
             constraintLayout     : "androidx.constraintlayout:constraintlayout:${androidx.constraint_version}",
-            recyclerView         : "androidx.recyclerview:recyclerview:${androidx.recyclerView_version}"
+            recyclerView         : "androidx.recyclerview:recyclerview:${androidx.recyclerView_version}",
+            materialDesign       : "com.google.android.material:material:$material_version"
     ]
 
     appTestDependencies = [
